@@ -30,6 +30,8 @@ public class User {
 //	@UpdateTimestamp
 //	@Column (name = "updated_at")
 //	private LocalDateTime updatedAt;
+	
+	private Boolean enabled;
 
 	public User() {
 		super();
@@ -67,7 +69,13 @@ public class User {
 		this.createdAt = createdAt;
 	}
 
-	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	@Override
 	public int hashCode() {
