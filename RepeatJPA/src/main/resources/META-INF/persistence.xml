@@ -12,10 +12,16 @@
 		<class>com.skilldistillery.repeat.entities.AircraftType</class>
 		
 		<class>com.skilldistillery.repeat.entities.Certification</class>
+		
+		<class>com.skilldistillery.repeat.entities.ExperienceType</class>
+		
+		<class>com.skilldistillery.repeat.entities.ExperienceTypeRequirement</class>
 
 		<class>com.skilldistillery.repeat.entities.Organization</class>
 
 		<class>com.skilldistillery.repeat.entities.PilotCertification</class>
+		
+		<class>com.skilldistillery.repeat.entities.PilotLogEntry</class>
 
 		<class>com.skilldistillery.repeat.entities.Role</class>
 
