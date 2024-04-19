@@ -1,5 +1,6 @@
 package com.skilldistillery.repeat.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,24 +20,33 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String username;
 	
 	private String password;
 	
+	@Column(name="date_of_birth")
+	private LocalDate dateOfBirth;
+	
+	@Column(name="image_url")
+	private String imageUrl;
+	
+	private Boolean enabled;
+	
 	@CreationTimestamp
 	@Column (name = "created_at")
 	private LocalDateTime createdAt;
-
-//	@UpdateTimestamp
-//	@Column (name = "updated_at")
-//	private LocalDateTime updatedAt;
 	
-	private Boolean enabled;
+	@UpdateTimestamp
+	@Column (name = "updated_at")	
+	private LocalDateTime updatedAt;
+	
 
 	public User() {
 		super();
 	}
 
+	
 	public int getId() {
 		return id;
 	}
@@ -76,6 +86,37 @@ public class User {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -94,11 +135,13 @@ public class User {
 		return id == other.id;
 	}
 
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createdAt=" + createdAt
-				+ ", updatedAt=" ;
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", dateOfBirth=" + dateOfBirth
+				+ ", imageUrl=" + imageUrl + ", enabled=" + enabled + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + "]";
 	}
-	
+
 	
 }
