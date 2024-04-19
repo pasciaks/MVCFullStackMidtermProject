@@ -7,24 +7,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class Aircraft {
+@Table(name = "certification")
+public class Certification {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "tail_number")
-	private String tailNumber;
+    @Column(name = "description")
+    private String description;
+    
+    @Column(name = "required")
+    private Boolean required;
 	
-	@Column(name = "active")
-	private Boolean active;
-	
-	@Column(name = "enabled")
-	private Boolean enabled;
-	
-	public Aircraft() {
+	public Certification() {
 		super();
 	}
 
@@ -36,28 +35,20 @@ public class Aircraft {
 		this.id = id;
 	}
 
-	public String getTailNumber() {
-		return tailNumber;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setTailNumber(String tailNumber) {
-		this.tailNumber = tailNumber;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Boolean getActive() {
-		return active;
+	public Boolean getRequired() {
+		return required;
 	}
 
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setRequired(Boolean required) {
+		this.required = required;
 	}
 
 	@Override
@@ -73,14 +64,14 @@ public class Aircraft {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Aircraft other = (Aircraft) obj;
+		Certification other = (Certification) obj;
 		return id == other.id;
 	}
 
 	@Override
 	public String toString() {
-		return "Aircraft [id=" + id + ", tailNumber=" + tailNumber + ", active=" + active + ", enabled=" + enabled
-				+ "]";
+		return "Certification [id=" + id + ", description=" + description + ", required=" + required + "]";
 	}
+
 
 }

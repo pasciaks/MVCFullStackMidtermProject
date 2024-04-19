@@ -8,8 +8,16 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<class>com.skilldistillery.repeat.entities.Aircraft</class>
-		
+
 		<class>com.skilldistillery.repeat.entities.AircraftType</class>
+		
+		<class>com.skilldistillery.repeat.entities.Certification</class>
+
+		<class>com.skilldistillery.repeat.entities.Organization</class>
+
+		<class>com.skilldistillery.repeat.entities.PilotCertification</class>
+
+		<class>com.skilldistillery.repeat.entities.Role</class>
 
 		<class>com.skilldistillery.repeat.entities.User</class>
 

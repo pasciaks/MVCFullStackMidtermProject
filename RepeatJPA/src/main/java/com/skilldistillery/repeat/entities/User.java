@@ -13,7 +13,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-
 @Entity
 public class User {
 
@@ -40,13 +39,11 @@ public class User {
 	@UpdateTimestamp
 	@Column (name = "updated_at")	
 	private LocalDateTime updatedAt;
-	
 
 	public User() {
 		super();
 	}
 
-	
 	public int getId() {
 		return id;
 	}
