@@ -1,5 +1,7 @@
 package com.skilldistillery.repeat.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +28,10 @@ public class AircraftType {
 	
 	@Column(name = "enabled")
 	private Boolean enabled;
+	
+	@OneToMany(mappedBy="aircraftType")
+	private List<Aircraft> aircrafts;
+	
 	
 	public AircraftType() {
 		super();
@@ -62,6 +69,33 @@ public class AircraftType {
 		this.enabled = eanbled;
 	}
 
+	
+	public List<Aircraft> getAircrafts() {
+		return aircrafts;
+	}
+
+	public void setAircrafts(List<Aircraft> aircrafts) {
+		this.aircrafts = aircrafts;
+	}
+	public void addAircraft(Aircraft aircraft) {
+	    if (aircrafts == null) {
+	       aircrafts = new ArrayList<>();
+	    }
+	    if (!aircrafts.contains(aircraft)) {
+	        aircrafts.add(aircraft);
+	        if (aircraft.getAircraftType() != null && !aircraft.getAircraftType().equals(this)) {
+	            aircraft.getAircraftType().removeAircraft(aircraft);
+	        }
+	        aircraft.setAircraftType(this);
+	    }
+	}
+	public void removeAircraft(Aircraft aircraft) {
+	    if (aircrafts != null && aircrafts.contains(aircraft)) {
+	        aircrafts.remove(aircraft);
+	        aircraft.setAircraftType(null);
+	    }
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

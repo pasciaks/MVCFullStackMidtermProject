@@ -51,12 +51,11 @@ public class AircraftTypeTest {
 		assertEquals(1, aircraftType.getId());
 	}
 	
-//	@Test
-//	void test_AircraftType_image_url_mapping() {
-//		assertNotNull(aircraftType);
-//        assertNull(aircraftType.getImageUrl());
-//    }
-	
+	@Test
+	void test_AircraftType_has_Aircrafts_mapping() {
+		assertNotNull(aircraftType);
+        assertTrue(aircraftType.getAircrafts().size()> 0);
+    }
 //	@Test
 //	void test_AircraftType_enabled_mapping() {
 //		assertNotNull(aircraftType);

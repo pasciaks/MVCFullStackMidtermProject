@@ -67,6 +67,12 @@ public class AircraftTest {
 		assertNotNull(aircraft);
 		assertNull(aircraft.getEnabled());
 	}
+	@Test
+	void test_Aircraft_has_AircraftType() {
+		assertNotNull(aircraft);
+		assertEquals(1,aircraft.getAircraftType().getId());
+		assertEquals("ah64d",aircraft.getAircraftType().getAircraftType());
+	}
 
 
 	

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Aircraft {
@@ -23,6 +25,10 @@ public class Aircraft {
 	
 	@Column(name = "enabled")
 	private Boolean enabled;
+	
+	@ManyToOne
+	@JoinColumn(name="aircraft_type_id")
+	private AircraftType aircraftType;
 	
 	public Aircraft() {
 		super();
@@ -58,6 +64,14 @@ public class Aircraft {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public AircraftType getAircraftType() {
+		return aircraftType;
+	}
+
+	public void setAircraftType(AircraftType aircraftType) {
+		this.aircraftType = aircraftType;
 	}
 
 	@Override
