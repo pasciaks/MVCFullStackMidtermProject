@@ -49,30 +49,48 @@ public class UserTest {
 		assertNotNull(user);
 		
 	}
+	
 	@Test
 	void test_User_entity_username() {
 		assertNotNull(user);
 		assertEquals("maverick",user.getUsername() );
 	}
+	
 	@Test
 	void test_User_entity_password() {
 		assertNotNull(user);
 		assertEquals("topgun",user.getPassword() );
 	}
+	
 	@Test
 	void test_User_entity_date_of_birth() {
 		assertNotNull(user);
 		System.out.println(user.getDateOfBirth());
 	}
+	
 	@Test
 	void test_User_entity_image_url() {
 		assertNotNull(user);
 		assertEquals("https://m.media-amazon.com/images/M/MV5BYWI1ZDQ4ZDItNjk0Ny00ZDcyLWI5MjctMmFkZjdkODI5ZGRlXkEyXkFqcGdeQWRvb2xpbmhk._V1_.jpg", user.getImageUrl());
 	}
+
 	@Test
 	void test_User_entity_date_of_enabled() {
 		assertNotNull(user);
 		assertTrue(user.getEnabled());
+	}
+	
+	@Test
+	void test_User_has_organization() {
+		assertNotNull(user);
+		assertNotNull(user.getOrganization());
+		assertEquals("1-501AB",user.getOrganization().getName());
+	}
+	
+	@Test
+	void test_User_has_pilot_log_entries() {
+		assertNotNull(user);
+		assertNotNull(user.getPilotLogEntries());
 	}
 	
 }

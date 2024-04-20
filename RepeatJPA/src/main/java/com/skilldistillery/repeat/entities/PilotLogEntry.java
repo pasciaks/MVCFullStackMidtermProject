@@ -2,6 +2,7 @@ package com.skilldistillery.repeat.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +34,10 @@ public class PilotLogEntry {
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	
 	public PilotLogEntry() {
@@ -68,6 +76,14 @@ public class PilotLogEntry {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	@Override
 	public int hashCode() {
@@ -89,7 +105,7 @@ public class PilotLogEntry {
 	@Override
 	public String toString() {
 		return "PilotLogEntry [id=" + id + ", startTime=" + startTime + ", stopTime=" + stopTime + ", createdAt="
-				+ createdAt + "]";
+				+ createdAt + "] User:" + user.getUsername() + "(" + user.getId() + ")";
 	}
 
 

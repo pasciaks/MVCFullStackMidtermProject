@@ -27,6 +27,9 @@ public class Organization {
 	@OneToMany(mappedBy="organization")
 	private List<Aircraft> aircrafts;
 	
+	@OneToMany(mappedBy="organization")
+	private List<User> users;
+	
 	public Organization() {
 		super();
 	}
@@ -81,6 +84,33 @@ public class Organization {
 	    }
 	}
 	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
+	public void addUser(User user) {
+	    if (users == null) {
+	       users = new ArrayList<>();
+	    }
+	    if (!users.contains(user)) {
+	        users.add(user);
+	        if (user.getOrganization() != null && !user.getOrganization().equals(this)) {
+	            user.getOrganization().removeUser(user);
+	        }
+	        user.setOrganization(this);
+	    }
+	}
+	public void removeUser(User user) {
+	    if (users != null && users.contains(user)) {
+	        users.remove(user);
+	        user.setOrganization(null);
+	    }
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

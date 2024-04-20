@@ -70,6 +70,15 @@ public class PilotLogEntryTest {
 		assertNotNull(pilotLogEntry);
 		assertNull(pilotLogEntry.getCreatedAt());
 	}
+	
+	
+	@Test	
+	void test_PilotLogEntry_has_user_at_mapping() {
+		assertNotNull(pilotLogEntry);
+		System.out.println(pilotLogEntry);
+		assertNotNull(pilotLogEntry.getUser());
+		System.out.println(pilotLogEntry.getUser().getUsername());
+	}
 
 	
 }

@@ -68,6 +68,17 @@ public class OrganizationTest {
 		assertNotNull(organization);
 		assertTrue(organization.getAircrafts().size()>0);
 	}
-
+	
+	@Test
+	void test_Organization_has_users_mapping() {
+		assertNotNull(organization);
+		assertTrue(organization.getUsers().size()>0);
+		System.out.println(organization.getUsers().size());
+		
+		for (User user : organization.getUsers()) {
+			System.out.println(user.getUsername());
+		}
+	}
+	
 	
 }

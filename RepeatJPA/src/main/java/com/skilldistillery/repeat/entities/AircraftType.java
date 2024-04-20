@@ -108,6 +108,25 @@ public class AircraftType {
 	    }
 	}
 	
+	public void addExperienceTypeRequirement(ExperienceTypeRequirement experiencetyperequirement) {
+	    if (experienceTypeRequirements == null) {
+	       experienceTypeRequirements = new ArrayList<>();
+	    }
+	    if (!experienceTypeRequirements.contains(experiencetyperequirement)) {
+	        experienceTypeRequirements.add(experiencetyperequirement);
+	        if (experiencetyperequirement.getAircraftType() != null && !experiencetyperequirement.getAircraftType().equals(this)) {
+	            experiencetyperequirement.getAircraftType().removeExperienceTypeRequirement(experiencetyperequirement);
+	        }
+	        experiencetyperequirement.setAircraftType(this);
+	    }
+	}
+	public void removeExperienceTypeRequirement(ExperienceTypeRequirement experiencetyperequirement) {
+	    if (experienceTypeRequirements != null && experienceTypeRequirements.contains(experiencetyperequirement)) {
+	        experienceTypeRequirements.remove(experiencetyperequirement);
+	        experiencetyperequirement.setAircraftType(null);
+	    }
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

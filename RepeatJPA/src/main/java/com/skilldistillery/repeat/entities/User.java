@@ -2,6 +2,8 @@ package com.skilldistillery.repeat.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +14,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -39,6 +44,13 @@ public class User {
 	@UpdateTimestamp
 	@Column (name = "updated_at")	
 	private LocalDateTime updatedAt;
+	
+	@ManyToOne
+	@JoinColumn(name="organization_id")
+	private Organization organization;
+	
+	@OneToMany(mappedBy="user")
+	private List<PilotLogEntry> pilotLogEntries;
 
 	public User() {
 		super();
@@ -113,7 +125,41 @@ public class User {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	public Organization getOrganization() {
+		return organization;
+	}
 
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+	
+	public List<PilotLogEntry> getPilotLogEntries() {
+		return pilotLogEntries;
+	}
+
+	public void setPilotLogEntries(List<PilotLogEntry> pilotLogEntries) {
+		this.pilotLogEntries = pilotLogEntries;
+	}
+	
+	public void addPilotLogEntry(PilotLogEntry pilotlogentry) {
+	    if (pilotLogEntries == null) {
+	       pilotLogEntries = new ArrayList<>();
+	    }
+	    if (!pilotLogEntries.contains(pilotlogentry)) {
+	        pilotLogEntries.add(pilotlogentry);
+	        if (pilotlogentry.getUser() != null && !pilotlogentry.getUser().equals(this)) {
+	            pilotlogentry.getUser().removePilotLogEntry(pilotlogentry);
+	        }
+	        pilotlogentry.setUser(this);
+	    }
+	}
+	public void removePilotLogEntry(PilotLogEntry pilotlogentry) {
+	    if (pilotLogEntries != null && pilotLogEntries.contains(pilotlogentry)) {
+	        pilotLogEntries.remove(pilotlogentry);
+	        pilotlogentry.setUser(null);
+	    }
+	}
 
 	@Override
 	public int hashCode() {
