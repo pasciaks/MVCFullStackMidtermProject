@@ -73,6 +73,12 @@ public class AircraftTest {
 		assertEquals(1,aircraft.getAircraftType().getId());
 		assertEquals("ah64d",aircraft.getAircraftType().getAircraftType());
 	}
+	@Test
+	void test_Aircraft_has_Organization() {
+		assertNotNull(aircraft);
+		assertEquals("1-501AB",aircraft.getOrganization().getName());
+		assertTrue(aircraft.getOrganization().getEnabled());
+	}
 
 
 	

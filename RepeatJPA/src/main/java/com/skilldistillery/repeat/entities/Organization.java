@@ -1,5 +1,6 @@
 package com.skilldistillery.repeat.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Organization {
@@ -21,6 +23,9 @@ public class Organization {
 	@Column(name = "enabled")
 	private Boolean enabled;
 
+	@OneToMany(mappedBy="organization")
+	private List<Aircraft> aircrafts;
+	
 	public Organization() {
 		super();
 	}
@@ -47,6 +52,14 @@ public class Organization {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public List<Aircraft> getAircrafts() {
+		return aircrafts;
+	}
+
+	public void setAircrafts(List<Aircraft> aircrafts) {
+		this.aircrafts = aircrafts;
 	}
 
 	@Override

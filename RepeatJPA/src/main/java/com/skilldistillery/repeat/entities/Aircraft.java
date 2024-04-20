@@ -30,6 +30,10 @@ public class Aircraft {
 	@JoinColumn(name="aircraft_type_id")
 	private AircraftType aircraftType;
 	
+	@ManyToOne
+	@JoinColumn(name="organization_id")
+	private Organization organization;
+	
 	public Aircraft() {
 		super();
 	}
@@ -72,6 +76,14 @@ public class Aircraft {
 
 	public void setAircraftType(AircraftType aircraftType) {
 		this.aircraftType = aircraftType;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	@Override

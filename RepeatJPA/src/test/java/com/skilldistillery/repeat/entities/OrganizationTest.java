@@ -63,6 +63,11 @@ public class OrganizationTest {
 		assertNotNull(organization);
 		assertTrue(organization.getEnabled());
 	}
+	@Test
+	void test_Organization_has_Aircraft_mapping() {
+		assertNotNull(organization);
+		assertTrue(organization.getAircrafts().size()>0);
+	}
 
 	
 }
