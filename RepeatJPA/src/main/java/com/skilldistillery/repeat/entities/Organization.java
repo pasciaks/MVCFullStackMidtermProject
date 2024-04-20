@@ -1,5 +1,6 @@
 package com.skilldistillery.repeat.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +62,25 @@ public class Organization {
 	public void setAircrafts(List<Aircraft> aircrafts) {
 		this.aircrafts = aircrafts;
 	}
-
+	public void addAircraft(Aircraft aircraft) {
+	    if (aircrafts == null) {
+	       aircrafts = new ArrayList<>();
+	    }
+	    if (!aircrafts.contains(aircraft)) {
+	        aircrafts.add(aircraft);
+	        if (aircraft.getOrganization() != null && !aircraft.getOrganization().equals(this)) {
+	            aircraft.getOrganization().removeAircraft(aircraft);
+	        }
+	        aircraft.setOrganization(this);
+	    }
+	}
+	public void removeAircraft(Aircraft aircraft) {
+	    if (aircrafts != null && aircrafts.contains(aircraft)) {
+	        aircrafts.remove(aircraft);
+	        aircraft.setOrganization(null);
+	    }
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

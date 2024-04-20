@@ -56,11 +56,10 @@ public class AircraftTypeTest {
 		assertNotNull(aircraftType);
         assertTrue(aircraftType.getAircrafts().size()> 0);
     }
-//	@Test
-//	void test_AircraftType_enabled_mapping() {
-//		assertNotNull(aircraftType);
-//		assertTrue(aircraftType.getEnabled());
-//	}
+	@Test
+	void test_AircraftType_has_ExperienceTypeRequirements() {
+		assertNotNull(aircraftType);
+	}
 	
 	
 }

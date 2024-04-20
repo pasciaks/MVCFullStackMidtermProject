@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +21,10 @@ public class ExperienceTypeRequirement {
 
 	@Column (name="minutes_required")
 	private int minutesRequired;
+	
+	@ManyToOne
+	@JoinColumn(name="aircraft_type_id")
+	private AircraftType aircraftType;
 	
 	public ExperienceTypeRequirement() {
 		super();
@@ -39,6 +45,14 @@ public class ExperienceTypeRequirement {
 
 	public void setMinutesRequired(int minutesRequired) {
 		this.minutesRequired = minutesRequired;
+	}
+
+	public AircraftType getAircraftType() {
+		return aircraftType;
+	}
+
+	public void setAircraftType(AircraftType aircraftType) {
+		this.aircraftType = aircraftType;
 	}
 
 	@Override

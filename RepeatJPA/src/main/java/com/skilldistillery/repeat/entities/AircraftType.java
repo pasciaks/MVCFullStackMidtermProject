@@ -32,6 +32,9 @@ public class AircraftType {
 	@OneToMany(mappedBy="aircraftType")
 	private List<Aircraft> aircrafts;
 	
+	@OneToMany(mappedBy="aircraftType")
+	private List<ExperienceTypeRequirement> experienceTypeRequirements;
+	
 	
 	public AircraftType() {
 		super();
@@ -77,6 +80,15 @@ public class AircraftType {
 	public void setAircrafts(List<Aircraft> aircrafts) {
 		this.aircrafts = aircrafts;
 	}
+	
+	public List<ExperienceTypeRequirement> getExperienceTypeRequirements() {
+		return experienceTypeRequirements;
+	}
+
+	public void setExperienceTypeRequirements(List<ExperienceTypeRequirement> experienceTypeRequirements) {
+		this.experienceTypeRequirements = experienceTypeRequirements;
+	}
+
 	public void addAircraft(Aircraft aircraft) {
 	    if (aircrafts == null) {
 	       aircrafts = new ArrayList<>();

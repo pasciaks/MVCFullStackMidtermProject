@@ -55,6 +55,12 @@ public class ExperienceTypeRequirementTest {
 		assertNotNull(experienceTypeRequirement);
 		assertEquals(60, experienceTypeRequirement.getMinutesRequired());
 	}
-	
+	@Test
+	void test_ExperienceTypeRequirementt_has_AircraftType() {
+		assertNotNull(experienceTypeRequirement);
+		assertEquals(1, experienceTypeRequirement.getAircraftType().getId());
+		assertTrue(experienceTypeRequirement.getAircraftType().getEnabled());
+		assertNull(experienceTypeRequirement.getAircraftType().getImageUrl());
+	}	
 	
 }
