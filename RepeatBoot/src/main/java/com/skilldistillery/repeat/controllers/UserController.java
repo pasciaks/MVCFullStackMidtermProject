@@ -33,7 +33,7 @@ public class UserController {
 		
 		if (authenticatedUser != null) {
 			session.setAttribute("loggedInUser", authenticatedUser);
-		    mv.setViewName("profile");
+		    mv.setViewName("private/profile");
 		} else {
 			mv.setViewName("login");
 			//mv.setViewName("error");

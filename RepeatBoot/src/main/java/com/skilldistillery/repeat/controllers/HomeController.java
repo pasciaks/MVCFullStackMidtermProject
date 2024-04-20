@@ -10,5 +10,10 @@ public class HomeController {
 	public String home() {
         return "home";
     }
+	
+	@GetMapping({"about.do"})
+	public String about() {
+        return "public/about";
+    }
 
 }
