@@ -51,6 +51,10 @@ public class User {
 	
 	@OneToMany(mappedBy="user")
 	private List<PilotLogEntry> pilotLogEntries;
+	
+	@ManyToOne
+	@JoinColumn(name="role_id")
+	private Role role;
 
 	public User() {
 		super();
@@ -142,6 +146,14 @@ public class User {
 		this.pilotLogEntries = pilotLogEntries;
 	}
 	
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public void addPilotLogEntry(PilotLogEntry pilotlogentry) {
 	    if (pilotLogEntries == null) {
 	       pilotLogEntries = new ArrayList<>();

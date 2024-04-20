@@ -55,12 +55,20 @@ public class ExperienceTypeTest {
 		assertNotNull(experienceType);
 		assertEquals("Day flight minutes", experienceType.getDescription());
 	}
+	
 	@Test
 	void test_ExperienceType_enabled_mapping() {
 		assertNotNull(experienceType);
 		assertTrue(experienceType.getEnabled());
 	}
 	
+	@Test
+	void test_ExperienceType_has_requirements_mapping() {
+		assertNotNull(experienceType);
+		assertEquals(1,experienceType.getExperienceTypeRequirement().getId());
+		assertEquals(60,experienceType.getExperienceTypeRequirement().getMinutesRequired());
+		assertEquals(1,experienceType.getExperienceTypeRequirement().getAircraftType().getId());
+	}
 	
 	
 }

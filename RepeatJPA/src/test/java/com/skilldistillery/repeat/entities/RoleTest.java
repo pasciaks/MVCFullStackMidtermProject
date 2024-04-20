@@ -58,4 +58,12 @@ public class RoleTest {
 	}
 	
 	
+	@Test
+	void test_Role_users_mapping() {
+		assertNotNull(role);
+
+		assertTrue(role.getUsers().size() > 0);
+	}
+	
+	
 }

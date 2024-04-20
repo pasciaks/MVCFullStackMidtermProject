@@ -49,18 +49,26 @@ public class ExperienceTypeRequirementTest {
 	void test_ExperienceTypeRequirement_entity_mapping() {
 		assertNotNull(experienceTypeRequirement);
 	}
-	
+
 	@Test
-	void test_ExperienceTypeRequirementt_minutes_required_mapping() {
+	void test_ExperienceTypeRequirement_minutes_required_mapping() {
 		assertNotNull(experienceTypeRequirement);
 		assertEquals(60, experienceTypeRequirement.getMinutesRequired());
 	}
+
 	@Test
-	void test_ExperienceTypeRequirementt_has_AircraftType() {
+	void test_ExperienceTypeRequirement_has_AircraftType() {
 		assertNotNull(experienceTypeRequirement);
 		assertEquals(1, experienceTypeRequirement.getAircraftType().getId());
 		assertTrue(experienceTypeRequirement.getAircraftType().getEnabled());
 		assertNull(experienceTypeRequirement.getAircraftType().getImageUrl());
-	}	
-	
+	}
+
+	@Test
+	void test_ExperienceTypeRequirement_has_Experience_Types() {
+		assertNotNull(experienceTypeRequirement);
+		assertNotNull(experienceTypeRequirement.getExperienceTypes());
+		assertTrue(experienceTypeRequirement.getExperienceTypes().size() > 0);
+	}
+
 }

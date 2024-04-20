@@ -92,5 +92,11 @@ public class UserTest {
 		assertNotNull(user);
 		assertNotNull(user.getPilotLogEntries());
 	}
+
+	@Test
+	void test_User_has_role() {
+		assertNotNull(user);
+		assertNotNull(user.getRole());
+	}
 	
 }
