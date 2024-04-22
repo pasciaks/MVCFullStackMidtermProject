@@ -35,18 +35,19 @@
 
 						<div class="mb-3">
 							<label for="username" class="form-label">User name:</label> <input
-								type="text" class="form-control" id="username" name="username">
+								type="text" class="form-control" id="username" name="username"
+								required>
 						</div>
 
 						<div class="mb-3">
 							<label for="password" class="form-label">Password:</label> <input
 								type="password" class="form-control" id="password"
-								name="password">
+								name="password" required>
 						</div>
 
 						<div class="mb-3">
 							<!-- // TODO - In future, pull from property of list of Roles passed in, for now roles are static only 4 types. -->
-							<select name="role" id="role" class="form-select"
+							<select name="roleId" id="roleId" class="form-select"
 								aria-label="Default select example">
 								<option selected value="1">Pilot</option>
 								<option value="2">Clerk</option>
@@ -58,7 +59,7 @@
 						<div class="mb-3">
 							<label for="dateOfBirth" class="form-label">Select your
 								Date of Birth:</label> <input type="date" class="form-control"
-								id="dateOfBirth" name="dateOfBirth">
+								id="dateOfBirth" name="dateOfBirth" required>
 						</div>
 
 						<div class="mb-3">
@@ -67,10 +68,13 @@
 						</div>
 
 						<div class="mb-3">
-							<!-- // TODO - In future, pull from property of list of Roles passed in, for now roles are static only 4 types. -->
-							<select name="organization" id="organization" class="form-select"
+							<!-- // TODO - In future, pull from property of list of all Organizations in the system for now roles are static only 2 organizations.... -->
+							<label for="organizationId" class="form-label">Select
+								your Organization:</label> <select name="organizationId"
+								id="organizationId" class="form-select"
 								aria-label="Default select example">
-								<option selected value="1">......</option>
+								<option selected value="1">1-501AB</option>
+								<option value="2">1-110AB</option>
 							</select>
 						</div>
 
@@ -78,7 +82,6 @@
 						<div class="mb-3">
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
-
 
 					</form>
 

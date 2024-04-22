@@ -18,17 +18,19 @@
 
 			<div class="row">
 				<div class="col text-center">
-					<h1>Home</h1>
-					<img src="logo.png" width="25%" alt="REPEAT logo"
-						class="img-responsive" />
-					<p></p>
+					<h1>Error</h1>
+
 				</div>
 			</div>
 
-
+			<div class="row">
+				<div class="col text-center">
+					<p>${error}</p>
+				</div>
+			</div>
 
 		</div>
-
+		
 	</main>
 
 	<jsp:include page="_tail.jsp" />

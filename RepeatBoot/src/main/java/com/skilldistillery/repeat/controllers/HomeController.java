@@ -15,5 +15,17 @@ public class HomeController {
 	public String about() {
         return "public/about";
     }
+	
+	@GetMapping({"profile.do"})
+	public String profile() {
+        return "private/profile";
+    }
+	
+	
+	
+	@GetMapping({"error.do"})
+	public String error() {
+        return "error";
+    }
 
 }
