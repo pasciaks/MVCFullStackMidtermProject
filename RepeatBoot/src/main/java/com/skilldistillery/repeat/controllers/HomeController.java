@@ -21,8 +21,6 @@ public class HomeController {
         return "private/profile";
     }
 	
-	
-	
 	@GetMapping({"error.do"})
 	public String error() {
         return "error";

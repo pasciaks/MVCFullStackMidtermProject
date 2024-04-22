@@ -13,19 +13,21 @@
 	<jsp:include page="../_nav.jsp" />
 
 	<main>
-		<div class="alert alert-danger" role="alert">${error}</div>
-
-		<div class="container login">
+		<div class="alert alert-primary" role="alert">${message}</div>
+		<div class="container">
 
 			<div class="row">
 				<div class="col">
-					<form method="POST" action="login.do">
-						<input type="text" name="username" placeholder="username"><br>
-						<input type="password" name="password" placeholder="password"><br>
-						<input type="submit" value="Login">
-					</form>
+					<h1>Users</h1>
+					<c:if test="${! empty sessionScope.loggedInUser}">
+						<p>${sessionScope.loggedInUser.username}</p>
+					</c:if>
 				</div>
 			</div>
+
+
+
+
 
 		</div>
 

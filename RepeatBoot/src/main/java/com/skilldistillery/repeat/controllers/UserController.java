@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.repeat.data.UserDAO;
 import com.skilldistillery.repeat.entities.User;
@@ -45,9 +46,12 @@ public class UserController {
 			session.setAttribute("loggedInUser", authenticatedUser);
 			mv.setViewName("redirect:profile.do");
 		} else {
-			mv.setViewName("login");
+			mv.setViewName("public/login");
 		}
-
+		System.out.println(authenticatedUser);
+		if (authenticatedUser == null) {
+			mv.addObject("error", "Could not login. Verify credentials or user activation with admin.");
+		}
 		return mv;
 	}
 
@@ -94,4 +98,11 @@ public class UserController {
 		return mv;
 	}
 
+	@GetMapping({ "logout.do" })
+	public String logOutGet(HttpSession session, RedirectAttributes redir) {
+		session.removeAttribute("loggedInUser");
+		redir.addFlashAttribute("message", "You have been logged out.");
+		return "redirect:about.do";
+	}
+	
 }

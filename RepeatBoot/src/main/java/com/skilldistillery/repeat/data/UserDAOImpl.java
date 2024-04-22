@@ -1,6 +1,7 @@
 package com.skilldistillery.repeat.data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -72,6 +73,17 @@ public class UserDAOImpl implements UserDAO {
 
 		return user;
 
+	}
+
+	@Override
+	public List<User> findAllUser() {
+	
+		String jpql = "SELECT user FROM User user";
+		List<User> users = new ArrayList<>();
+		users = em.createQuery(jpql, User.class).getResultList();
+		System.out.println(users.size());
+		System.out.println(users);
+		return users;
 	}
 
 }

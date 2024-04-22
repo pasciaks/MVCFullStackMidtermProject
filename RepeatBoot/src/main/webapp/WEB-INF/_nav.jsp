@@ -12,6 +12,8 @@
         <li><a class="nav-link" href="register.do">Register</a></li>
         <li><a class="nav-link" href="logout.do">Logout</a></li>
         <li><a class="nav-link" href="profile.do">Profile</a></li>
+        <li><a class="nav-link" href="list_user.do">Users</a></li>
+        
       </div>
     </div>
   </div>

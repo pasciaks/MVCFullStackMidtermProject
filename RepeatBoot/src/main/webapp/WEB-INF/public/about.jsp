@@ -13,7 +13,7 @@
 	<jsp:include page="../_nav.jsp" />
 
 	<main>
-
+		<div class="alert alert-success" role="alert">${message}</div>
 		<div class="container about">
 
 			<div class="row">
@@ -30,18 +30,18 @@
 			<div class="row">
 				<div class="col">
 					<h3 class="text-center">Bryan</h3>
-					
-						<p>SCRUM Master</p>
-						<p>DBA</p>
-						<p>Programmer</p>
-			
+
+					<p>SCRUM Master</p>
+					<p>DBA</p>
+					<p>Programmer</p>
+
 				</div>
 				<div class="col">
 					<h3 class="text-center">Sheldon</h3>
 
-						<p>REPO Owner</p>
-						<p>Programmer</p>
-			
+					<p>REPO Owner</p>
+					<p>Programmer</p>
+
 				</div>
 			</div>
 
