@@ -30,14 +30,15 @@ public class AdminController {
 
 	@GetMapping({ "list_user.do" })
 	public String listUsersGet(HttpSession session, Model model, RedirectAttributes redir) {
-		
-		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser") : null;
-		
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
 		if (loggedInUser == null) {
 			redir.addFlashAttribute("message", "You must be logged in.");
 			return "redirect:login.do";
 		}
-		
+
 		if (loggedInUser.getRole().getId() != 4) {
 			redir.addFlashAttribute("message", "You must be logged in as an Admin to edit users.");
 			return "redirect:login.do";
@@ -53,14 +54,42 @@ public class AdminController {
 		}
 
 		System.out.println(users);
-		
+
 		System.out.println("**************************************");
-		
+
 		model.addAttribute("users", users);
-		
 
 		return "admin/list_user";
 
 	}
 
+	@PostMapping({ "enable_user.do" })
+	public String enableUser(@RequestParam("id") int id, HttpSession session, Model model, RedirectAttributes redir) {
+		User user = null;
+		user = userDAO.enableUser(id);
+		if (user == null) {
+			model.addAttribute("error", "Could not enable user.");	
+			return "error";
+		}
+		else { 
+			model.addAttribute("message", "User has been enabled.");
+		}
+		return "success";
+
+	}
+	
+	@PostMapping({ "disable_user.do" })
+	public String disableUser(@RequestParam("id") int id, HttpSession session, Model model, RedirectAttributes redir) {
+		User user = null;
+		user = userDAO.disableUser(id);
+		if (user == null) {
+			model.addAttribute("error", "Could not disable user.");		 
+			return "error";
+		}
+		else { 
+			model.addAttribute("message", "User has been disabled.");
+		}
+		return "success";
+		
+	}
 }

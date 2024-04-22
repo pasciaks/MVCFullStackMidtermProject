@@ -13,5 +13,9 @@ public interface UserDAO {
 			LocalDate dateOfBirth);
 
 	List<User> findAllUser();
+	
+	User enableUser(int id);
+	
+	User disableUser(int id);
 
 }

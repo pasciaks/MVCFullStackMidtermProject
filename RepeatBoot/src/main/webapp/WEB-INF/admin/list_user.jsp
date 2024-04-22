@@ -49,7 +49,7 @@
 								<td>${user.enabled == true ? '<span class="text-success">enabled</span>' :  '<span class="text-danger">disabled</span>' }</td>
 
 								<td>
-									<form method="post" action="enableUser.do">
+									<form method="post" action="enable_user.do">
 										<input type="hidden" name="id" value="${user.id}" />
 										<button type="submit" class="btn btn-success">Enable</button>
 									</form>
@@ -57,7 +57,7 @@
 
 
 								<td>
-									<form method="post" action="disableUser.do">
+									<form method="post" action="disable_user.do">
 										<input type="hidden" name="id" value="${user.id}" />
 										<button type="submit" class="btn btn-danger">Disable</button>
 									</form>

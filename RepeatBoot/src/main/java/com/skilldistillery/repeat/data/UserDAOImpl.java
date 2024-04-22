@@ -86,4 +86,20 @@ public class UserDAOImpl implements UserDAO {
 		return users;
 	}
 
+	@Override
+	public User enableUser(int id) {
+		User user = em.find(User.class, id);
+		user.setEnabled(true);
+		em.persist(user);
+		return user;
+	}
+
+	@Override
+	public User disableUser(int id) {
+		User user = em.find(User.class, id);
+		user.setEnabled(false);
+		em.persist(user);
+		return user;
+	}
+
 }
