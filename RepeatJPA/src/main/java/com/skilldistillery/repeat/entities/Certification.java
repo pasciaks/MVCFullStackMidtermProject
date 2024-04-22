@@ -1,5 +1,7 @@
 package com.skilldistillery.repeat.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +25,9 @@ public class Certification {
     
     @Column(name = "required")
     private Boolean required;
+    
+	@OneToMany(mappedBy="certification")
+	private List<PilotCertification> pilotCertifications;
 	
 	public Certification() {
 		super();
@@ -51,6 +57,33 @@ public class Certification {
 		this.required = required;
 	}
 
+	public List<PilotCertification> getPilotCertifications() {
+		return pilotCertifications;
+	}
+
+	public void setPilotCertifications(List<PilotCertification> pilotCertifications) {
+		this.pilotCertifications = pilotCertifications;
+	}
+
+	public void addPilotCertification(PilotCertification pilotcertification) {
+	    if (pilotCertifications == null) {
+	       pilotCertifications = new ArrayList<>();
+	    }
+	    if (!pilotCertifications.contains(pilotcertification)) {
+	        pilotCertifications.add(pilotcertification);
+	        if (pilotcertification.getCertification() != null && !pilotcertification.getCertification().equals(this)) {
+	            pilotcertification.getCertification().removePilotCertification(pilotcertification);
+	        }
+	        pilotcertification.setCertification(this);
+	    }
+	}
+	public void removePilotCertification(PilotCertification pilotcertification) {
+	    if (pilotCertifications != null && pilotCertifications.contains(pilotcertification)) {
+	        pilotCertifications.remove(pilotcertification);
+	        pilotcertification.setCertification(null);
+	    }
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

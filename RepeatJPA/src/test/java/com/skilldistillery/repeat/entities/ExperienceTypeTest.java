@@ -69,6 +69,12 @@ public class ExperienceTypeTest {
 		assertEquals(60,experienceType.getExperienceTypeRequirement().getMinutesRequired());
 		assertEquals(1,experienceType.getExperienceTypeRequirement().getAircraftType().getId());
 	}
-	
+
+	@Test
+	void test_ExperienceType_has_pilot_log_entry() {
+		assertNotNull(experienceType);
+		assertNotNull(experienceType.getPilotLogEntries());		
+		assertEquals(1,experienceType.getPilotLogEntries().size());
+			}
 	
 }

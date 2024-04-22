@@ -1,5 +1,7 @@
 package com.skilldistillery.repeat.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,7 +30,9 @@ public class ExperienceType {
 	@JoinColumn(name="experience_type_requirement_id")
 	private ExperienceTypeRequirement experienceTypeRequirement;
 	
-
+	@OneToMany(mappedBy="experienceType")
+	private List<PilotLogEntry> pilotLogEntries;
+	
 	public ExperienceType() {
 		super();
 	}
@@ -64,6 +69,33 @@ public class ExperienceType {
 		this.experienceTypeRequirement = experienceTypeRequirement;
 	}
 
+	public List<PilotLogEntry> getPilotLogEntries() {
+		return pilotLogEntries;
+	}
+
+	public void setPilotLogEntries(List<PilotLogEntry> pilotLogEntries) {
+		this.pilotLogEntries = pilotLogEntries;
+	}
+
+	public void addPilotLogEntry(PilotLogEntry pilotlogentry) {
+	    if (pilotLogEntries == null) {
+	       pilotLogEntries = new ArrayList<>();
+	    }
+	    if (!pilotLogEntries.contains(pilotlogentry)) {
+	        pilotLogEntries.add(pilotlogentry);
+	        if (pilotlogentry.getExperienceType() != null && !pilotlogentry.getExperienceType().equals(this)) {
+	            pilotlogentry.getExperienceType().removePilotLogEntry(pilotlogentry);
+	        }
+	        pilotlogentry.setExperienceType(this);
+	    }
+	}
+	public void removePilotLogEntry(PilotLogEntry pilotlogentry) {
+	    if (pilotLogEntries != null && pilotLogEntries.contains(pilotlogentry)) {
+	        pilotLogEntries.remove(pilotlogentry);
+	        pilotlogentry.setExperienceType(null);
+	    }
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

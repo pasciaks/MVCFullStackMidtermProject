@@ -99,4 +99,12 @@ public class UserTest {
 		assertNotNull(user.getRole());
 	}
 	
+	@Test
+	void test_User_has_pilot_certification() {
+		assertNotNull(user);
+		assertNotNull(user.getPilotCertifications());
+		assertTrue(user.getPilotCertifications().size()>0);
+		
+	}
+	
 }

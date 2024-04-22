@@ -79,6 +79,13 @@ public class PilotLogEntryTest {
 		assertNotNull(pilotLogEntry.getUser());
 		System.out.println(pilotLogEntry.getUser().getUsername());
 	}
-
+	
+	@Test	
+	void test_PilotLogEntry_has_experience_type() {
+		assertNotNull(pilotLogEntry);
+		assertNotNull(pilotLogEntry.getExperienceType());
+		System.out.println(pilotLogEntry.getExperienceType().getDescription());
+		assertEquals("Day flight minutes", pilotLogEntry.getExperienceType().getDescription());
+	}
 	
 }

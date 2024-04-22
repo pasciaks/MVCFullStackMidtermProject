@@ -38,7 +38,10 @@ public class PilotLogEntry {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
-	
+
+	@ManyToOne
+	@JoinColumn(name="experience_type_id")
+	private ExperienceType experienceType;
 	
 	public PilotLogEntry() {
 		super();
@@ -88,6 +91,15 @@ public class PilotLogEntry {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	
+	public ExperienceType getExperienceType() {
+		return experienceType;
+	}
+
+	public void setExperienceType(ExperienceType experienceType) {
+		this.experienceType = experienceType;
 	}
 
 	@Override

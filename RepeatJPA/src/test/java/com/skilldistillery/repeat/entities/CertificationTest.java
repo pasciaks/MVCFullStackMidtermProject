@@ -62,6 +62,13 @@ public class CertificationTest {
 		assertNotNull(certification);
 		assertTrue(certification.getRequired());
 	}
+	
+	@Test
+	void test_Certification_has_certification_mapping() {
+		assertNotNull(certification);
+		assertNotNull(certification.getPilotCertifications());
+		assertTrue(certification.getPilotCertifications().size()>0);
+	}
 
 	
 }

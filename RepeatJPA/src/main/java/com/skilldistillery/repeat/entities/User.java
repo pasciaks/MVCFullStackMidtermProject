@@ -51,6 +51,9 @@ public class User {
 	
 	@OneToMany(mappedBy="user")
 	private List<PilotLogEntry> pilotLogEntries;
+
+	@OneToMany(mappedBy="user")
+	private List<PilotCertification> pilotCertifications;
 	
 	@ManyToOne
 	@JoinColumn(name="role_id")
@@ -154,6 +157,15 @@ public class User {
 		this.role = role;
 	}
 
+	
+	public List<PilotCertification> getPilotCertifications() {
+		return pilotCertifications;
+	}
+
+	public void setPilotCertifications(List<PilotCertification> pilotCertifications) {
+		this.pilotCertifications = pilotCertifications;
+	}
+
 	public void addPilotLogEntry(PilotLogEntry pilotlogentry) {
 	    if (pilotLogEntries == null) {
 	       pilotLogEntries = new ArrayList<>();
@@ -166,6 +178,7 @@ public class User {
 	        pilotlogentry.setUser(this);
 	    }
 	}
+	
 	public void removePilotLogEntry(PilotLogEntry pilotlogentry) {
 	    if (pilotLogEntries != null && pilotLogEntries.contains(pilotlogentry)) {
 	        pilotLogEntries.remove(pilotlogentry);
@@ -173,6 +186,26 @@ public class User {
 	    }
 	}
 
+	public void addPilotCertification(PilotCertification pilotcertification) {
+	    if (pilotCertifications == null) {
+	       pilotCertifications = new ArrayList<>();
+	    }
+	    if (!pilotCertifications.contains(pilotcertification)) {
+	        pilotCertifications.add(pilotcertification);
+	        if (pilotcertification.getUser() != null && !pilotcertification.getUser().equals(this)) {
+	            pilotcertification.getUser().removePilotCertification(pilotcertification);
+	        }
+	        pilotcertification.setUser(this);
+	    }
+	}
+	
+	public void removePilotCertification(PilotCertification pilotcertification) {
+	    if (pilotCertifications != null && pilotCertifications.contains(pilotcertification)) {
+	        pilotCertifications.remove(pilotcertification);
+	        pilotcertification.setUser(null);
+	    }
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

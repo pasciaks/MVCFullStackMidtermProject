@@ -79,6 +79,22 @@ public class PilotCertificationTest {
 		assertNotNull(pilotCertification);
 		assertNull(pilotCertification.getExpirationDate());
 	}
+    
+    @Test
+    void test_PilotCertification_user_mapping() {
+    	assertNotNull(pilotCertification);
+    	assertEquals(1, pilotCertification.getUser().getId());
+    	
+    }
+
+    @Test
+    void test_PilotCertification_has_certification_mapping() {
+    	assertNotNull(pilotCertification);
+    	assertNotNull( pilotCertification.getCertification());
+    	assertEquals(1, pilotCertification.getCertification().getId());
+    	System.out.println(pilotCertification.getCertification());
+    
+    }
 
 	
 }

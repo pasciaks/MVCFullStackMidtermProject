@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +31,15 @@ public class PilotCertification {
 	
 	@Column(name = "expiration_date")
 	private LocalDate expirationDate;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+
+	@ManyToOne
+	@JoinColumn(name="certification_id")
+	private Certification certification;
+	
 	
 	public PilotCertification() {
 		super();
@@ -72,6 +83,24 @@ public class PilotCertification {
 
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
+	}
+
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
+	public Certification getCertification() {
+		return certification;
+	}
+
+	public void setCertification(Certification certification) {
+		this.certification = certification;
 	}
 
 	@Override
