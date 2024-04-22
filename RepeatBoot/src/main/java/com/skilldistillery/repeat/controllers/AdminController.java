@@ -29,7 +29,19 @@ public class AdminController {
 	}
 
 	@GetMapping({ "list_user.do" })
-	public String listUsersGet(HttpSession session, Model model) {
+	public String listUsersGet(HttpSession session, Model model, RedirectAttributes redir) {
+		
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser") : null;
+		
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+		
+		if (loggedInUser.getRole().getId() != 4) {
+			redir.addFlashAttribute("message", "You must be logged in as an Admin to edit users.");
+			return "redirect:login.do";
+		}
 
 		List<User> users = new ArrayList<>();
 

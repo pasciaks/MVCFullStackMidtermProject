@@ -13,7 +13,16 @@
 	<jsp:include page="../_nav.jsp" />
 
 	<main>
-		<div class="alert alert-primary" role="alert">${message}</div>
+
+		<c:if test="${! empty error}">
+			<div class="alert alert-danger" role="alert">${error}</div>
+		</c:if>
+
+
+		<c:if test="${! empty message}">
+			<div class="alert alert-success" role="alert">${message}</div>
+		</c:if>
+
 		<div class="container">
 
 			<div class="row">
@@ -28,7 +37,8 @@
 					</c:if>
 
 
-					<p>${users.size()}usersfound.</p>
+					<p>${users.size()}<span> user(s) found.</span>
+					</p>
 
 
 					<table class="table table-bordered">

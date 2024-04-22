@@ -14,6 +14,17 @@
 
 	<main>
 
+
+		<c:if test="${! empty error}">
+			<div class="alert alert-danger" role="alert">${error}</div>
+		</c:if>
+
+
+		<c:if test="${! empty message}">
+			<div class="alert alert-success" role="alert">${message}</div>
+		</c:if>
+
+
 		<div class="container">
 
 			<div class="row">
