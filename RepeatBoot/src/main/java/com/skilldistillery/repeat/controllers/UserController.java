@@ -1,8 +1,9 @@
 package com.skilldistillery.repeat.controllers;
-
+ 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +61,7 @@ public class UserController {
 			@RequestParam("password") String password, @RequestParam("imageUrl") String imageUrl,
 			@RequestParam("roleId") String roleId, @RequestParam("organizationId") String organizationId,
 			@RequestParam("dateOfBirth") LocalDate dateOfBirth, HttpSession session) {
-		
+
 		// TODO: check that dateOfBirth can come in as ISO string yyyy-mm-dd
 
 		ModelAndView mv = new ModelAndView();
@@ -72,15 +73,15 @@ public class UserController {
 		System.out.println(organizationId);
 		System.out.println(dateOfBirth);
 
-		// LocalDate dateOfBirthLocalDateObject = LocalDate.parse(dateOfBirth, DateTimeFormatter.ISO_DATE);
+		// LocalDate dateOfBirthLocalDateObject = LocalDate.parse(dateOfBirth,
+		// DateTimeFormatter.ISO_DATE);
 
 		// use DAO to attempt to create new registration
 
 		User registeredUser = null;
-		
+
 		try {
-			registeredUser = userDAO.registerUser(username, password, imageUrl, roleId, organizationId,
-					dateOfBirth);
+			registeredUser = userDAO.registerUser(username, password, imageUrl, roleId, organizationId, dateOfBirth);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("error", e.getMessage());
@@ -106,5 +107,43 @@ public class UserController {
 		redir.addFlashAttribute("message", "You have been logged out.");
 		return "redirect:about.do";
 	}
-	
+
+	@PostMapping({ "update_profile.do" })
+	public String updateProfile(User user, HttpSession session, RedirectAttributes redir) {
+
+		// TODO: check that dateOfBirth can come in as ISO string yyyy-mm-dd
+
+		ModelAndView mv = new ModelAndView();
+
+		// LocalDate dateOfBirthLocalDateObject = LocalDate.parse(dateOfBirth,
+		// DateTimeFormatter.ISO_DATE);
+
+		// use DAO to attempt to create new registration
+
+		User updatedUser = null;
+
+		try {
+			updatedUser = userDAO.updateUser(user.getId(), user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			redir.addFlashAttribute("error", " *** TODO: ** " + e.getMessage());
+			// TDOO: Capture specific error case for duplicate username, etc
+			return "redirect:error.do";
+		}
+
+		if (updatedUser == null) {
+			System.out.println("Failed to update user.");
+			redir.addFlashAttribute("error", "Failed to update user.!!");
+			redir.addFlashAttribute("message", null);
+			return "redirect:error.do";
+		} else {
+			System.out.println("Successfully updated user.");
+			// mv.addObject("message", "Successfully updated user.");
+			redir.addFlashAttribute("error", null);
+			redir.addFlashAttribute("message", "Successfully updated user.!!");
+			return "redirect:success.do";
+		}
+
+	}
+
 }

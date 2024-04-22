@@ -17,5 +17,9 @@ public interface UserDAO {
 	User enableUser(int id);
 	
 	User disableUser(int id);
+	
+	User updateUser(int id, User user);
+	
+	User findById(int id);
 
 }

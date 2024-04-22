@@ -32,6 +32,19 @@
 					<h1>Profile</h1>
 					<c:if test="${! empty sessionScope.loggedInUser}">
 						<p>${sessionScope.loggedInUser.username}</p>
+
+
+						<form action="update_profile.do" method="post">
+
+							<jsp:include page="../public/_profile_form.jsp" />
+
+							<div class="mb-3">
+								<button type="submit" class="btn btn-primary">Update Profile</button>
+							</div>
+
+						</form>
+
+
 					</c:if>
 				</div>
 			</div>

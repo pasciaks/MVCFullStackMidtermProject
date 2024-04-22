@@ -48,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
 		user.setPassword(password);
 		user.setImageUrl(imageUrl);
 		user.setDateOfBirth(dateOfBirth);
-		
+
 		user.setEnabled(false);
 
 		// role - find role according to roleId passed in
@@ -62,7 +62,7 @@ public class UserDAOImpl implements UserDAO {
 		Organization organization = em.find(Organization.class, organizationId);
 
 		user.setOrganization(organization);
-		
+
 		try {
 			em.persist(user);
 			em.flush();
@@ -77,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<User> findAllUser() {
-	
+
 		String jpql = "SELECT user FROM User user";
 		List<User> users = new ArrayList<>();
 		users = em.createQuery(jpql, User.class).getResultList();
@@ -91,6 +91,7 @@ public class UserDAOImpl implements UserDAO {
 		User user = em.find(User.class, id);
 		user.setEnabled(true);
 		em.persist(user);
+		em.flush();
 		return user;
 	}
 
@@ -99,7 +100,55 @@ public class UserDAOImpl implements UserDAO {
 		User user = em.find(User.class, id);
 		user.setEnabled(false);
 		em.persist(user);
+		em.flush();
 		return user;
+	}
+
+	@Override
+	public User updateUser(int id, User user) {
+
+		User managed = em.find(User.class, id);
+
+		if (managed == null) {
+			return null;
+		}
+
+		managed.setUsername(user.getUsername());
+		managed.setPassword(user.getPassword());
+		managed.setImageUrl(user.getImageUrl());
+		managed.setDateOfBirth(user.getDateOfBirth());
+
+		// managed.setRole(user.getRole());
+		
+		// managed.setOrganization(user.getOrganization());
+
+		try {
+			em.persist(managed);
+			em.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+			managed = null;
+		}
+
+		System.out.println(managed);
+
+		return managed;
+
+	}
+
+	@Override
+	public User findById(int id) {
+		
+		User user = null;
+		
+		try {
+			 user = em.find(User.class, id);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
+		return user;
+		
 	}
 
 }

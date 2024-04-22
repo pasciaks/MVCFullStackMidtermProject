@@ -17,7 +17,7 @@
 		<div class="container">
 
 			<c:if test="${! empty error}">
-				<div class="alert alert-danger" role="alert">${error}</div>
+				<div class="alert alert-danger" role="alert">-->${error}<--</div>
 			</c:if>
 
 
