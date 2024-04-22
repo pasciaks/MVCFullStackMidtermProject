@@ -59,7 +59,9 @@ public class UserController {
 	public ModelAndView registerPost(@RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("imageUrl") String imageUrl,
 			@RequestParam("roleId") String roleId, @RequestParam("organizationId") String organizationId,
-			@RequestParam("dateOfBirth") String dateOfBirth, HttpSession session) {
+			@RequestParam("dateOfBirth") LocalDate dateOfBirth, HttpSession session) {
+		
+		// TODO: check that dateOfBirth can come in as ISO string yyyy-mm-dd
 
 		ModelAndView mv = new ModelAndView();
 
@@ -70,7 +72,7 @@ public class UserController {
 		System.out.println(organizationId);
 		System.out.println(dateOfBirth);
 
-		LocalDate dateOfBirthLocalDateObject = LocalDate.parse(dateOfBirth, DateTimeFormatter.ISO_DATE);
+		// LocalDate dateOfBirthLocalDateObject = LocalDate.parse(dateOfBirth, DateTimeFormatter.ISO_DATE);
 
 		// use DAO to attempt to create new registration
 
@@ -78,7 +80,7 @@ public class UserController {
 		
 		try {
 			registeredUser = userDAO.registerUser(username, password, imageUrl, roleId, organizationId,
-					dateOfBirthLocalDateObject);
+					dateOfBirth);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("error", e.getMessage());

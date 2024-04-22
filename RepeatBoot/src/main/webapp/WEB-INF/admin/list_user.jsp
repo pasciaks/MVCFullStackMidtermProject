@@ -22,6 +22,40 @@
 					<c:if test="${! empty sessionScope.loggedInUser}">
 						<p>${sessionScope.loggedInUser.username}</p>
 					</c:if>
+
+					<c:if test="${! empty message}">
+						<div class="alert alert-success">${message}</div>
+					</c:if>
+
+
+					<p>${users.size()}usersfound.</p>
+
+
+					<table class="table table-bordered">
+						<c:forEach var="user" items="${users}">
+							<tr>
+								<td>${user.id}</td>
+								<td>${user.username}</td>
+								<td>${user.enabled == true ? '<span class="text-success">enabled</span>' :  '<span class="text-danger">disabled</span>' }</td>
+
+								<td>
+									<form method="post" action="enableUser.do">
+										<input type="hidden" name="id" value="${user.id}" />
+										<button type="submit" class="btn btn-success">Enable</button>
+									</form>
+								</td>
+
+
+								<td>
+									<form method="post" action="disableUser.do">
+										<input type="hidden" name="id" value="${user.id}" />
+										<button type="submit" class="btn btn-danger">Disable</button>
+									</form>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+
 				</div>
 			</div>
 
