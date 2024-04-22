@@ -6,8 +6,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="home.do">Home</a>
+        <a class="nav-link" aria-current="page" href="home.do">Home</a>
         <a class="nav-link" href="about.do">About</a>
+        <li><a class="nav-link" href="login.do">Login</a></li>
+        <li><a class="nav-link" href="register.do">Register</a></li>
+        <li><a class="nav-link" href="logout.do">Logout</a></li>
+        <li><a class="nav-link" href="profile.do">Profile</a></li>
       </div>
     </div>
   </div>

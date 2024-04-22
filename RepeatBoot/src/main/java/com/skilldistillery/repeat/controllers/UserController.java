@@ -24,6 +24,12 @@ public class UserController {
         return "login";
     }
 	
+	
+	@GetMapping({"register.do"})
+	public String registerGet() {
+        return "public/register";
+    }
+	
 	@PostMapping({"login.do"})
 	public ModelAndView loginPost(User user, HttpSession session) {
         

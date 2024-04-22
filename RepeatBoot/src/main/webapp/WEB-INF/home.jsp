@@ -17,11 +17,15 @@
 		<div class="container">
 
 			<div class="row">
-				<div class="col"></div>
-				<div class="col"></div>
+				<div class="col text-center">
+					<h1>Home</h1>
+					<img src="logo.png" width="25%" alt="REPEAT logo"
+						class="img-responsive" />
+						<p></p>
+				</div>
 			</div>
 
-			<div class="row">
+			<!-- 			<div class="row">
 				<div class="col">
 					<form method="POST" action="login.do">
 						<input type="text" name="username" placeholder="username"><br>
@@ -29,7 +33,7 @@
 						<input type="submit" value="Login">
 					</form>
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 
