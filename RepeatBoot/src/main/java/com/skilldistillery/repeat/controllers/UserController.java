@@ -36,7 +36,7 @@ public class UserController {
 	}
 
 	@GetMapping({ "register.do" })
-	public String registerGet(Model model) {
+	public String registerGet(Model model, HttpSession session) {
 		List<Role> roles = userDAO.findAllRoles();
 		List<Organization> organizations = userDAO.findAllOrganizations();
 		model.addAttribute("roles", roles );

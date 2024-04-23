@@ -48,8 +48,27 @@ public class PilotDAOImpl implements PilotDAO {
 
 	@Override
 	public List<PilotLogEntry> findAllPilotLogEntries(int userId) {
-		User user = em.find(User.class, userId);
-		return user.getPilotLogEntries();
+		
+		
+		
+		String jpql = "SELECT ple FROM PilotLogEntry ple WHERE ple.user.id = :userId order by ple.id asc";
+		
+		
+		List<PilotLogEntry> pilotLogEntries = new ArrayList<>();
+		
+		pilotLogEntries = em.createQuery(jpql, PilotLogEntry.class).setParameter("userId", userId).getResultList();
+		
+		//User user = em.find(User.class, userId);
+		
+		//return user.getPilotLogEntries();
+		
+		return pilotLogEntries;
+		
+		
+		
+		
+		
+		
 	}
 
 	@Override
@@ -71,6 +90,9 @@ public class PilotDAOImpl implements PilotDAO {
 		managed.setStopTime(pilotLogEntry.getStopTime());
 		managed.setUser(pilotLogEntry.getUser());
 		managed.setExperienceType(pilotLogEntry.getExperienceType());
+		
+		System.out.println("-----------");
+		System.out.println(managed.getExperienceType().getId());
 
 		try {
 			em.persist(managed);

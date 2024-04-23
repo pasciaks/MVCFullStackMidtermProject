@@ -29,7 +29,7 @@
 
 			<div class="row">
 				<div class="col">
-					<h1>Add Log Entry</h1>
+					<h1>Edit Log Entry</h1>
 					<c:if test="${! empty sessionScope.loggedInUser}">
 						<p>${sessionScope.loggedInUser.username}</p>
 					</c:if>

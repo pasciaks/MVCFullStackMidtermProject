@@ -153,7 +153,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Role> findAllRoles() {
-		String jpql = "SELECT role FROM Role role";
+		String jpql = "SELECT role FROM Role role order by role.id asc";
 		List<Role> roles = new ArrayList<>();
 		roles = em.createQuery(jpql, Role.class).getResultList();
 		System.out.println(roles.size());
@@ -164,7 +164,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Organization> findAllOrganizations() {
-		String jpql = "SELECT org FROM Organization org";
+		String jpql = "SELECT org FROM Organization org order by org.id asc";
 		List<Organization> org = new ArrayList<>();
 		org = em.createQuery(jpql, Organization.class).getResultList();
 		System.out.println(org.size());

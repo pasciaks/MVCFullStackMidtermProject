@@ -28,6 +28,7 @@ public class PilotController {
 
 	private PilotDAO pilotDAO;
 	private UserDAO userDAO;
+
 	public PilotController(PilotDAO pilotDAO, UserDAO userDAO) {
 		this.pilotDAO = pilotDAO;
 		this.userDAO = userDAO;
@@ -145,9 +146,9 @@ public class PilotController {
 			System.out.print("Error in PilotDAO findPilotLogEntryById");
 			e.printStackTrace();
 		}
-		
+
 		model.addAttribute("pilotLogEntry", pilotLogEntry);
-		
+
 		List<ExperienceType> experienceTypes = new ArrayList<>();
 
 		try {
@@ -180,20 +181,98 @@ public class PilotController {
 			redir.addFlashAttribute("message", "You must be logged in as an pilot to add pilot log entries.");
 			return "redirect:login.do";
 		}
-		User user = userDAO.findById(loggedInUser.getId());
-		ExperienceType experienceType = pilotDAO.findById(experienceTypeId)		;
 		
+		User user = userDAO.findById(loggedInUser.getId());
+		
+		ExperienceType experienceType = pilotDAO.findById(experienceTypeId);
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime startTime = LocalDateTime.parse(startTimeStr, formatter);
 		LocalDateTime stopTime = LocalDateTime.parse(stopTimeStr, formatter);
 		PilotLogEntry pilotLogEntryDetails = new PilotLogEntry();
+		
 		pilotLogEntryDetails.setStartTime(startTime);
 		pilotLogEntryDetails.setStopTime(stopTime);
 		pilotLogEntryDetails.setUser(user);
 		pilotLogEntryDetails.setExperienceType(experienceType);
+		
 		pilotDAO.updatePilotLog(loggedInUser.getId(), pilotLogEntryDetails);
-		redir.addFlashAttribute("message", "Flight has been updated.");
+		
+		redir.addFlashAttribute("message", "Flight has been updated." + experienceType.getId() + " " + experienceType.getDescription() + " " + startTime + " " + stopTime);
+		
 		return "redirect:success.do";
+
+	}
+
+	@GetMapping({ "evaluate_experience.do" })
+	public String evaluateExperience(HttpSession session, RedirectAttributes redir, Model model) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 1) {
+			redir.addFlashAttribute("message", "You must be logged in as an pilot to add pilot log entries.");
+			return "redirect:login.do";
+		}
+
+		List<PilotLogEntry> pilotLogEntries = new ArrayList<>();
+
+		try {
+			pilotLogEntries = pilotDAO.findAllPilotLogEntries(loggedInUser.getId());
+		} catch (Exception e) {
+			System.out.print("Error in listUsersGet");
+			e.printStackTrace();
+		}
+
+		int[] sum = new int[999];
+
+		for (int i = 0; i < 999; i++) {
+			sum[i] = 0;
+		}
+
+		model.addAttribute("pilotLogEntries", pilotLogEntries);
+
+		for (PilotLogEntry pilotLogEntry : pilotLogEntries) {
+			
+			long minutes = 0;
+
+			LocalDateTime startDateTime = pilotLogEntry.getStartTime();
+			LocalDateTime stopDateTime = pilotLogEntry.getStopTime();
+
+			// get the difference in minutes
+			if (startDateTime != null && stopDateTime != null) {
+				 minutes = java.time.Duration.between(startDateTime, stopDateTime).toMinutes();
+				int key = pilotLogEntry.getExperienceType().getId();
+				sum[key] += minutes;
+			}
+
+			System.out.println(pilotLogEntry.getExperienceType().getDescription() + " " + minutes);
+		}
+		
+		for (int j=0;j<999;j++) {
+			if (sum[j]>0) {
+				System.out.println("Experience Type ID: " + j + " Minutes: " + sum[j]);
+			}
+		}
+
+//		String jpql = " Select et.id as ExperienceTypeID, et.description, etr.id as etr_id, etr.minutes_required, etr.aircraft_type_id "
+//                + " from ExperienceTypeRequirement etr "
+//                + " join  ExperienceType et on et.experience_type_requirement_id = etr.id "
+//                + " where etr.getAircraftType.getId() = 1";
+
+//		select et.id as ExperienceTypeID, et.description, etr.id as etr_id, etr.minutes_required, etr.aircraft_type_id 
+//		 from experience_type_requirement etr
+//		join  experience_type et on et.experience_type_requirement_id = etr.id
+//		where etr.aircraft_type_id = 1;
+		
+		model.addAttribute("sum", sum);
+
+		return "pilot/evaluate_experience";
 
 	}
 
