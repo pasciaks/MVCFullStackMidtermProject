@@ -26,7 +26,7 @@
 		<div class="container login">
 
 			<div class="row">
-				<div class="col">
+				<div class="col text-center">
 					<form method="POST" action="login.do">
 						<input type="text" name="username" placeholder="username"><br>
 						<input type="password" name="password" placeholder="password"><br>

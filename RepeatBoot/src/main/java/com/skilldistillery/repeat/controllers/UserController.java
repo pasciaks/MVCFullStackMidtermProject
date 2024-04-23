@@ -139,11 +139,13 @@ public class UserController {
 		}
 
 		if (updatedUser == null) {
+			session.setAttribute("loggedInUser", null);
 			System.out.println("Failed to update user.");
 			redir.addFlashAttribute("error", "Failed to update user.!!");
 			redir.addFlashAttribute("message", null);
 			return "redirect:error.do";
 		} else {
+			session.setAttribute("loggedInUser", updatedUser);
 			System.out.println("Successfully updated user.");
 			// mv.addObject("message", "Successfully updated user.");
 			redir.addFlashAttribute("error", null);

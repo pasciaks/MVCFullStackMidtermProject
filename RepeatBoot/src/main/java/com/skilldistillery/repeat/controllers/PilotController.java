@@ -186,6 +186,9 @@ public class PilotController {
 		
 		ExperienceType experienceType = pilotDAO.findById(experienceTypeId);
 
+		startTimeStr = startTimeStr.replace("T"," ");
+		stopTimeStr = stopTimeStr.replace("T"," ");
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime startTime = LocalDateTime.parse(startTimeStr, formatter);
 		LocalDateTime stopTime = LocalDateTime.parse(stopTimeStr, formatter);
