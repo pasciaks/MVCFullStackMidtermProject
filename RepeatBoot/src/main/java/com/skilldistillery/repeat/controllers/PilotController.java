@@ -27,9 +27,10 @@ import jakarta.servlet.http.HttpSession;
 public class PilotController {
 
 	private PilotDAO pilotDAO;
-
-	public PilotController(PilotDAO pilotDAO) {
+	private UserDAO userDAO;
+	public PilotController(PilotDAO pilotDAO, UserDAO userDAO) {
 		this.pilotDAO = pilotDAO;
+		this.userDAO = userDAO;
 	}
 
 	@GetMapping({ "add_log_entry.do" })
@@ -117,6 +118,82 @@ public class PilotController {
 		model.addAttribute("pilotLogEntries", pilotLogEntries);
 
 		return "pilot/list_experience";
+
+	}
+
+	@GetMapping({ "edit_experience.do" })
+	public String editExperience(@RequestParam("id") int id, HttpSession session, RedirectAttributes redir,
+			Model model) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 1) {
+			redir.addFlashAttribute("message", "You must be logged in as an pilot to add pilot log entries.");
+			return "redirect:login.do";
+		}
+		PilotLogEntry pilotLogEntry = null;
+
+		try {
+			pilotLogEntry = pilotDAO.findPilotLogEntryById(id);
+		} catch (Exception e) {
+			System.out.print("Error in PilotDAO findPilotLogEntryById");
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("pilotLogEntry", pilotLogEntry);
+		
+		List<ExperienceType> experienceTypes = new ArrayList<>();
+
+		try {
+			experienceTypes = pilotDAO.findAllExperienceTypes();
+		} catch (Exception e) {
+			System.out.print("Error in listUsersGet");
+			e.printStackTrace();
+		}
+
+		model.addAttribute("experienceTypes", experienceTypes);
+
+		return "pilot/edit_experience";
+
+	}
+
+	@PostMapping({ "edit_experience.do" })
+	public String editExperience(HttpSession session, @RequestParam("startTime") String startTimeStr,
+			@RequestParam("stopTime") String stopTimeStr, @RequestParam("experienceType") int experienceTypeId,
+			RedirectAttributes redir) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 1) {
+			redir.addFlashAttribute("message", "You must be logged in as an pilot to add pilot log entries.");
+			return "redirect:login.do";
+		}
+		User user = userDAO.findById(loggedInUser.getId());
+		ExperienceType experienceType = pilotDAO.findById(experienceTypeId)		;
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime startTime = LocalDateTime.parse(startTimeStr, formatter);
+		LocalDateTime stopTime = LocalDateTime.parse(stopTimeStr, formatter);
+		PilotLogEntry pilotLogEntryDetails = new PilotLogEntry();
+		pilotLogEntryDetails.setStartTime(startTime);
+		pilotLogEntryDetails.setStopTime(stopTime);
+		pilotLogEntryDetails.setUser(user);
+		pilotLogEntryDetails.setExperienceType(experienceType);
+		pilotDAO.updatePilotLog(loggedInUser.getId(), pilotLogEntryDetails);
+		redir.addFlashAttribute("message", "Flight has been updated.");
+		return "redirect:success.do";
 
 	}
 

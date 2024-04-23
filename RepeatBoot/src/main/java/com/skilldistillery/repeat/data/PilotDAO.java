@@ -14,5 +14,10 @@ public interface PilotDAO {
 
 	List<PilotLogEntry> findAllPilotLogEntries(int id);
 
+	PilotLogEntry findPilotLogEntryById(int id);
+
+	PilotLogEntry updatePilotLog(int id, PilotLogEntry pilotLogEntry);
+
+	ExperienceType findById(int id);
 
 }

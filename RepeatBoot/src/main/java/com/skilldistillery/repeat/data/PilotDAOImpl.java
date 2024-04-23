@@ -51,4 +51,45 @@ public class PilotDAOImpl implements PilotDAO {
 		User user = em.find(User.class, userId);
 		return user.getPilotLogEntries();
 	}
+
+	@Override
+	public PilotLogEntry findPilotLogEntryById(int id) {
+		PilotLogEntry pilotLogEntry = em.find(PilotLogEntry.class, id);
+		return pilotLogEntry;
+	}
+
+	@Override
+	public PilotLogEntry updatePilotLog(int id, PilotLogEntry pilotLogEntry) {
+
+		PilotLogEntry managed = em.find(PilotLogEntry.class, id);
+
+		if (managed == null) {
+			return null;
+		}
+
+		managed.setStartTime(pilotLogEntry.getStartTime());
+		managed.setStopTime(pilotLogEntry.getStopTime());
+		managed.setUser(pilotLogEntry.getUser());
+		managed.setExperienceType(pilotLogEntry.getExperienceType());
+
+		try {
+			em.persist(managed);
+			em.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+			managed = null;
+		}
+
+		System.out.println(managed);
+
+		return managed;
+	
+	}
+
+	@Override
+	public ExperienceType findById(int id) {
+		ExperienceType experienceType = em.find(ExperienceType.class, id);
+		return experienceType;
+	}
+	
 }

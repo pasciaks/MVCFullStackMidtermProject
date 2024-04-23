@@ -39,13 +39,35 @@
 
 
 		<div class="container">
-			<c:forEach var="pilotLogEntry" items="${pilotLogEntries}"
-				varStatus="loop">
-				<p>${pilotLogEntry.getStartTime()}</p>
-				<p>${pilotLogEntry.getStopTime()}</p>
-				<p>${pilotLogEntry.getExperienceType().getDescription()}</p>
-				<p>${pilotLogEntry.getUser().getUsername()}</p>
-			</c:forEach>
+			<table class="table table-bordered">
+			<tr> 
+			<th> Start time </th>
+			<th> Stop time </th>
+			<th>Description</th>
+			<th>User</th>
+			<th>Edit</th>
+			</tr>
+			
+				<c:forEach var="pilotLogEntry" items="${pilotLogEntries}"
+					varStatus="loop">
+					<tr>
+						<td>${pilotLogEntry.getStartTime()}</td>
+						<td>${pilotLogEntry.getStopTime()}</td>
+						<td>${pilotLogEntry.getExperienceType().getDescription()}</td>
+						<td>${pilotLogEntry.getUser().getUsername()}</td>
+						<td>
+
+							<form method="get" action="edit_experience.do">
+								<input type="hidden" name="id" value="${pilotLogEntry.getId()}">
+								<div class="mb-3">
+									<button type="submit" class="btn btn-primary">Edit log
+										entry</button>
+								</div>
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
 		</div>
 	</main>
 

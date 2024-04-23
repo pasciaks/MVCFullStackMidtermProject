@@ -88,12 +88,6 @@ public class PilotLogEntry {
 		this.user = user;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	
 	public ExperienceType getExperienceType() {
 		return experienceType;
 	}
@@ -102,6 +96,10 @@ public class PilotLogEntry {
 		this.experienceType = experienceType;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
