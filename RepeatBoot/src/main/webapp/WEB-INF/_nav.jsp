@@ -13,6 +13,8 @@
         <li><a class="nav-link" href="logout.do">Logout</a></li>
         <li><a class="nav-link" href="profile.do">Profile</a></li>
         <li><a class="nav-link" href="list_user.do">Users</a></li>
+        <li><a class="nav-link" href="add_log_entry.do">Add Log</a></li>
+        <li><a class="nav-link" href="list_experience.do">Flight Logs</a></li>
         
       </div>
     </div>

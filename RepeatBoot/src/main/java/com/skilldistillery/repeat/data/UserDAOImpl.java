@@ -119,7 +119,7 @@ public class UserDAOImpl implements UserDAO {
 		managed.setDateOfBirth(user.getDateOfBirth());
 
 		// managed.setRole(user.getRole());
-		
+
 		// managed.setOrganization(user.getOrganization());
 
 		try {
@@ -138,17 +138,17 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User findById(int id) {
-		
+
 		User user = null;
-		
+
 		try {
-			 user = em.find(User.class, id);
+			user = em.find(User.class, id);
 		} catch (Exception e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		return user;
-		
+
 	}
 
 }
