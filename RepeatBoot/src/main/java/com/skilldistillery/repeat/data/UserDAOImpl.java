@@ -151,4 +151,25 @@ public class UserDAOImpl implements UserDAO {
 
 	}
 
+	@Override
+	public List<Role> findAllRoles() {
+		String jpql = "SELECT role FROM Role role";
+		List<Role> roles = new ArrayList<>();
+		roles = em.createQuery(jpql, Role.class).getResultList();
+		System.out.println(roles.size());
+		System.out.println(roles);
+		return roles;
+	
+	}
+
+	@Override
+	public List<Organization> findAllOrganizations() {
+		String jpql = "SELECT org FROM Organization org";
+		List<Organization> org = new ArrayList<>();
+		org = em.createQuery(jpql, Organization.class).getResultList();
+		System.out.println(org.size());
+		System.out.println(org);
+		return org;
+	}
+
 }

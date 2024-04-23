@@ -38,7 +38,8 @@
 
 			<div class="row">
 				<div class="col">
-
+					${roles.size()}
+					${organizations.size()}
 					<form id="register" action="register.do" method="post">
 
 						<jsp:include page="_profile_form.jsp" />

@@ -2,10 +2,11 @@ package com.skilldistillery.repeat.controllers;
  
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.repeat.data.UserDAO;
+import com.skilldistillery.repeat.entities.Organization;
+import com.skilldistillery.repeat.entities.Role;
 import com.skilldistillery.repeat.entities.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -33,7 +36,11 @@ public class UserController {
 	}
 
 	@GetMapping({ "register.do" })
-	public String registerGet() {
+	public String registerGet(Model model) {
+		List<Role> roles = userDAO.findAllRoles();
+		List<Organization> organizations = userDAO.findAllOrganizations();
+		model.addAttribute("roles", roles );
+		model.addAttribute("organizations", organizations);
 		return "public/register";
 	}
 
