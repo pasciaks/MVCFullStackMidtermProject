@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.repeat.entities.AircraftType;
+import com.skilldistillery.repeat.entities.Certification;
 import com.skilldistillery.repeat.entities.ExperienceType;
 import com.skilldistillery.repeat.entities.PilotCertification;
 import com.skilldistillery.repeat.entities.PilotLogEntry;
@@ -162,8 +163,6 @@ public class PilotDAOImpl implements PilotDAO {
 
 	@Override
 	public List<PilotCertification> findAllPilotCertification(int pilotId) {
-	//	String jpql = "SELECT et FROM ExperienceType et JOIN FETCH ExperienceTypeRequirement etr ON etr.id = et.experienceTypeRequirement.id WHERE etr.aircraftType.id = :atid order by et.id asc";
-	//	String jpql = "SELECT pc FROM PilotCertification pc JOIN User user ON user.id = pc.user.id, JOIN Certification cert ON cert.id = user.certification.id WHERE user.id = :pilotId order by user.id asc";
 		String jpql = "SELECT pc FROM PilotCertification pc JOIN Certification cert ON cert.id = pc.certification.id WHERE pc.user.id = :pilotId order by pc.user.id asc";
 		List<PilotCertification> pilotCertifiactions = new ArrayList<>();
 		pilotCertifiactions = em.createQuery(jpql, PilotCertification.class).setParameter("pilotId", pilotId)
@@ -171,6 +170,42 @@ public class PilotDAOImpl implements PilotDAO {
 		System.out.println(pilotCertifiactions.size());
 		System.out.println(pilotCertifiactions);
 		return pilotCertifiactions;
+	}
+
+	@Override
+	public List<Certification> findAllCertification() {
+		String jpql = "SELECT cert FROM Certification cert order by cert.id asc";
+		List<Certification> certifications = new ArrayList<>();
+		certifications = em.createQuery(jpql, Certification.class).getResultList();
+		System.out.println(certifications.size());
+		System.out.println(certifications);
+		return certifications;
+	}
+
+	@Override
+	public PilotCertification addPilotCertification(PilotCertification pilotCertification) {
+
+		PilotCertification newManagedPilotCertification = new PilotCertification();
+		
+		newManagedPilotCertification.setCertification(pilotCertification.getCertification());
+		newManagedPilotCertification.setDetails(pilotCertification.getDetails());
+		newManagedPilotCertification.setExpirationDate(pilotCertification.getExpirationDate());
+		newManagedPilotCertification.setEffectiveDate(pilotCertification.getEffectiveDate());
+		newManagedPilotCertification.setPassed(pilotCertification.getPassed());
+		newManagedPilotCertification.setUser(pilotCertification.getUser());
+		newManagedPilotCertification.setCertification(pilotCertification.getCertification());
+		
+		em.persist(newManagedPilotCertification);
+		
+		em.flush();
+		
+		return newManagedPilotCertification;
+	}
+
+	@Override
+	public Certification findCertificationById(int id) {
+		Certification certification = em.find(Certification.class, id);
+		return certification;
 	}
 
 }

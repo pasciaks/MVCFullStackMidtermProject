@@ -40,55 +40,72 @@
 							found.</span>
 					</p>
 
-					<form method="GET" action="add_certification.do">
-						<input type="hidden" name="pilotId" value="${currentPilotId}" />
-						<button type="submit" class="btn btn-success">Add
-							Certification</button>
-					</form>
 
-					<br>
 
-					<table class="table table-bordered">
+					<c:if test="${currentPilotId == loggedInUser.id}">
+						<div class="alert alert-danger">
+							<p>You can't add/edit your own certifications.</p>
+						</div>
+					</c:if>
 
-						<tr>
-							<th class="text-center">ID</th>
-							<th class="text-center">Description</th>
-							<th class="text-center">Details</th>
-							<th class="text-center">Effective Date</th>
-							<th class="text-center">Expiration Date</th>
-							<th class="text-center">Edit</th>
-							<th class="text-center">Delete</th>
-						</tr>
 
-						<c:forEach var="certification" items="${certifications}">
+					<p>pilotId: ${pilotId}</p>
+					<p>currentPilotId: ${currentPilotId}</p>
+
+					<c:if test="${currentPilotId != loggedInUser.id}">
+
+						<form method="GET"
+							action="add_certification.do?pilotId=${pilotId}">
+							<input type="hidden" name="pilotId" value="${pilotId}" />
+							<button type="submit" class="btn btn-success">Add
+								Certification</button>
+						</form>
+
+						<br>
+
+						<table class="table table-bordered">
+
 							<tr>
-								<td class="text-center">${certification.id}</td>
-								<td class="text-center">${certification.certification.description}</td>
-								<td class="text-center">${certification.details}</td>
-								<td class="text-center">${certification.effectiveDate ==
-									null ? '_____' : certification.effectiveDate }</td>
-								<td class="text-center">${certification.expirationDate == null ? '_____' : certification.expirationDate }</td>
-
-								<td>
-									<form method="GET" action="edit_certification.do">
-										<input type="hidden" name="id" value="${certification.id}" />
-										<input type="hidden" name="pilotId" value="${currentPilotId}" />
-										<button type="submit" class="btn btn-success">Edit</button>
-									</form>
-								</td>
-
-								<td>
-									<form method="POST" action="delete_certification.do"
-										onsubmit="return confirm('Are you sure?');">
-										<input type="hidden" name="id" value="${certification.id}" />
-										<input type="hidden" name="pilotId" value="${currentPilotId}" />
-										<button type="submit" class="btn btn-danger">Delete</button>
-									</form>
-								</td>
+								<th class="text-center">ID</th>
+								<th class="text-center">Description</th>
+								<th class="text-center">Details</th>
+								<th class="text-center">Effective Date</th>
+								<th class="text-center">Expiration Date</th>
+								<th class="text-center">Edit</th>
+								<th class="text-center">Delete</th>
 							</tr>
-						</c:forEach>
-						
-					</table>
+
+							<c:forEach var="certification" items="${certifications}">
+								<tr>
+									<td class="text-center">${certification.id}</td>
+									<td class="text-center">${certification.certification.description}</td>
+									<td class="text-center">${certification.details}</td>
+									<td class="text-center">${certification.effectiveDate ==
+									null ? '_____' : certification.effectiveDate }</td>
+									<td class="text-center">${certification.expirationDate == null ? '_____' : certification.expirationDate }</td>
+
+									<td>
+										<form method="GET" action="edit_certification.do">
+											<input type="hidden" name="id" value="${certification.id}" />
+											<input type="hidden" name="pilotId" value="${currentPilotId}" />
+											<button type="submit" class="btn btn-success">Edit</button>
+										</form>
+									</td>
+
+									<td>
+										<form method="POST" action="delete_certification.do"
+											onsubmit="return confirm('Are you sure?');">
+											<input type="hidden" name="id" value="${certification.id}" />
+											<input type="hidden" name="pilotId" value="${currentPilotId}" />
+											<button type="submit" class="btn btn-danger">Delete</button>
+										</form>
+									</td>
+								</tr>
+							</c:forEach>
+
+						</table>
+
+					</c:if>
 
 				</div>
 			</div>

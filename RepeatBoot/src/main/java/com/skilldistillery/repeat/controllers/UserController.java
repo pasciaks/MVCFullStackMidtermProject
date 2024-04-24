@@ -1,5 +1,5 @@
 package com.skilldistillery.repeat.controllers;
- 
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.repeat.data.PilotDAO;
 import com.skilldistillery.repeat.data.UserDAO;
+import com.skilldistillery.repeat.entities.Certification;
 import com.skilldistillery.repeat.entities.Organization;
 import com.skilldistillery.repeat.entities.PilotCertification;
 import com.skilldistillery.repeat.entities.Role;
@@ -32,7 +33,7 @@ public class UserController {
 
 	public UserController(UserDAO userDAO, PilotDAO pilotDAO) {
 		this.userDAO = userDAO;
-		this.pilotDAO= pilotDAO;
+		this.pilotDAO = pilotDAO;
 	}
 
 	@GetMapping({ "login.do" })
@@ -44,7 +45,7 @@ public class UserController {
 	public String registerGet(Model model, HttpSession session) {
 		List<Role> roles = userDAO.findAllRoles();
 		List<Organization> organizations = userDAO.findAllOrganizations();
-		model.addAttribute("roles", roles );
+		model.addAttribute("roles", roles);
 		model.addAttribute("organizations", organizations);
 		return "public/register";
 	}
@@ -63,7 +64,8 @@ public class UserController {
 		}
 		System.out.println(authenticatedUser);
 		if (authenticatedUser == null) {
-			mv.addObject("error", "Could not login. Verify your credentials are correct - NOTE: Newly registered accounts must be activated by admin before use is allowed.");
+			mv.addObject("error",
+					"Could not login. Verify your credentials are correct - NOTE: Newly registered accounts must be activated by admin before use is allowed.");
 		}
 		return mv;
 	}
@@ -77,11 +79,12 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 
 		User registeredUser = null;
-		
-		// see if the user already exists in the database and if so, return an error stating that the user already exists
-		
+
+		// see if the user already exists in the database and if so, return an error
+		// stating that the user already exists
+
 		List<User> users = userDAO.findAllUser();
-		
+
 		for (User user : users) {
 			if (user.getUsername().equals(username)) {
 				mv.addObject("error", "User already exists.");
@@ -90,8 +93,9 @@ public class UserController {
 				return mv;
 			}
 		}
-		
-		// if the user does not exist, then create a new user and return a success message
+
+		// if the user does not exist, then create a new user and return a success
+		// message
 
 		try {
 			registeredUser = userDAO.registerUser(username, password, imageUrl, roleId, organizationId, dateOfBirth);
@@ -187,38 +191,144 @@ public class UserController {
 		return "clerk/list_users_for_certification";
 
 	}
-	
+
 	@GetMapping({ "show_user.do" })
-	public String showUserGet( @RequestParam("id") int pilotId,HttpSession session, Model model, RedirectAttributes redir) {
-		
+	public String showUserGet(@RequestParam("id") int pilotId, HttpSession session, Model model,
+			RedirectAttributes redir) {
+
 		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
 				: null;
-		
+
 		if (loggedInUser == null) {
 			redir.addFlashAttribute("message", "You must be logged in.");
 			return "redirect:login.do";
 		}
-		
+
 		if (loggedInUser.getRole().getId() != 2) {
 			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
 			return "redirect:login.do";
 		}
-		
+
 		List<PilotCertification> certifications = new ArrayList<>();
-		
+
 		try {
 			certifications = pilotDAO.findAllPilotCertification(pilotId);
 		} catch (Exception e) {
 			System.out.print("Error in findAllPilotCertification");
 			e.printStackTrace();
 		}
+
+		System.out.println(certifications);
+
+		model.addAttribute("certifications", certifications);
+		model.addAttribute("currentPilotId", pilotId);	
+		model.addAttribute("pilotId", pilotId);
 		
+		System.out.println("currentPilotId: " + pilotId);
+		System.out.println("pilotId: " + pilotId);
+
+		return "clerk/show_user_certifications";
+
+	}
+
+	@GetMapping({ "add_certification.do" })
+	public String addCertification(@RequestParam("pilotId") int pilotId, HttpSession session, Model model,
+			RedirectAttributes redir) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 2) {
+			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
+			return "redirect:login.do";
+		}
+
+		List<Certification> certifications = new ArrayList<>();
+
+		try {
+			certifications = pilotDAO.findAllCertification();
+		} catch (Exception e) {
+			System.out.print("Error in findAllCertification");
+			e.printStackTrace();
+		}
+
 		System.out.println(certifications);
 
 		model.addAttribute("certifications", certifications);
 		model.addAttribute("currentPilotId", pilotId);
-		
-		return "clerk/show_user_certifications";
-		
+
+		return "clerk/add_certification";
+
 	}
+
+	@PostMapping({ "add_certification.do" })
+	public String addCertification(@RequestParam("id") int pilotId, @RequestParam("details") String details,
+			@RequestParam("passed") String passed, @RequestParam("expirationDate") LocalDate expirationDate,
+			@RequestParam("effectiveDate") LocalDate effectiveDate, @RequestParam("certificationId") int certificationId, HttpSession session, Model model,
+			RedirectAttributes redir) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 2) {
+			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
+			return "redirect:login.do";
+		}
+
+		PilotCertification pilotCertification = new PilotCertification();
+		
+		pilotCertification.setDetails(details);
+		
+		pilotCertification.setEffectiveDate(effectiveDate);
+		
+		pilotCertification.setExpirationDate(expirationDate);
+		
+		pilotCertification.setPassed(passed.equals("1") ? true : false);
+		
+		Certification certification = pilotDAO.findCertificationById(certificationId);
+		
+		if (certification == null) {
+			redir.addFlashAttribute("message", "Certification not found.");
+			return "redirect:error.do";
+		}
+		
+		pilotCertification.setCertification(certification);
+		
+		User pilotUser = userDAO.findById(pilotId);
+		
+		if (pilotUser == null) {
+			redir.addFlashAttribute("message", "Pilot not found.");
+			return "redirect:error.do";
+		}
+		
+		pilotCertification.setUser(pilotUser);
+		
+		try {
+			pilotCertification = pilotDAO.addPilotCertification(pilotCertification);
+        } catch (Exception e) {
+            System.out.print("Error in addPilotCertification");
+            e.printStackTrace();
+        }
+		
+		if (pilotCertification == null) {
+			redir.addFlashAttribute("message", "Failed to add certification.");
+			return "redirect:error.do";
+		} else {
+			redir.addFlashAttribute("message", "Successfully added certification.");
+            return "redirect:success.do";
+        }
+
+
+	}
+
 }

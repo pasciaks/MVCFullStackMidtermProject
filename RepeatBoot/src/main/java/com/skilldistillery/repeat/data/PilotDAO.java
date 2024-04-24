@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.skilldistillery.repeat.entities.AircraftType;
+import com.skilldistillery.repeat.entities.Certification;
 import com.skilldistillery.repeat.entities.ExperienceType;
 import com.skilldistillery.repeat.entities.PilotCertification;
 import com.skilldistillery.repeat.entities.PilotLogEntry;
@@ -29,7 +30,13 @@ public interface PilotDAO {
 	List<AircraftType> findAllAircraftType();
 	
 	Boolean deletePilotLogEntryById(int id);
-	
+
 	List<PilotCertification> findAllPilotCertification(int pilotId);
+	
+	List<Certification> findAllCertification();
+	
+	PilotCertification addPilotCertification(PilotCertification pilotCertification);
+	
+	Certification findCertificationById(int id);
 	
 }
