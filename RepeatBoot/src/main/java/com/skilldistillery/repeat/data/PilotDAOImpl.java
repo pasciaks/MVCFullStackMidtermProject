@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.repeat.entities.AircraftType;
 import com.skilldistillery.repeat.entities.ExperienceType;
+import com.skilldistillery.repeat.entities.PilotCertification;
 import com.skilldistillery.repeat.entities.PilotLogEntry;
 import com.skilldistillery.repeat.entities.User;
 
@@ -146,7 +147,7 @@ public class PilotDAOImpl implements PilotDAO {
 		if (managed == null) {
 			return false;
 		}
-		
+
 		try {
 			em.remove(managed);
 			em.flush();
@@ -157,6 +158,19 @@ public class PilotDAOImpl implements PilotDAO {
 		}
 
 		return wasDeleted;
+	}
+
+	@Override
+	public List<PilotCertification> findAllPilotCertification(int pilotId) {
+	//	String jpql = "SELECT et FROM ExperienceType et JOIN FETCH ExperienceTypeRequirement etr ON etr.id = et.experienceTypeRequirement.id WHERE etr.aircraftType.id = :atid order by et.id asc";
+	//	String jpql = "SELECT pc FROM PilotCertification pc JOIN User user ON user.id = pc.user.id, JOIN Certification cert ON cert.id = user.certification.id WHERE user.id = :pilotId order by user.id asc";
+		String jpql = "SELECT pc FROM PilotCertification pc JOIN Certification cert ON cert.id = pc.certification.id WHERE pc.user.id = :pilotId order by pc.user.id asc";
+		List<PilotCertification> pilotCertifiactions = new ArrayList<>();
+		pilotCertifiactions = em.createQuery(jpql, PilotCertification.class).setParameter("pilotId", pilotId)
+				.getResultList();
+		System.out.println(pilotCertifiactions.size());
+		System.out.println(pilotCertifiactions);
+		return pilotCertifiactions;
 	}
 
 }

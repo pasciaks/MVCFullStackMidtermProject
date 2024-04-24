@@ -2,6 +2,7 @@ package com.skilldistillery.repeat.controllers;
  
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.skilldistillery.repeat.data.PilotDAO;
 import com.skilldistillery.repeat.data.UserDAO;
 import com.skilldistillery.repeat.entities.Organization;
+import com.skilldistillery.repeat.entities.PilotCertification;
 import com.skilldistillery.repeat.entities.Role;
 import com.skilldistillery.repeat.entities.User;
 
@@ -25,9 +28,11 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 
 	private UserDAO userDAO;
+	private PilotDAO pilotDAO;
 
-	public UserController(UserDAO userDAO) {
+	public UserController(UserDAO userDAO, PilotDAO pilotDAO) {
 		this.userDAO = userDAO;
+		this.pilotDAO= pilotDAO;
 	}
 
 	@GetMapping({ "login.do" })
@@ -150,4 +155,69 @@ public class UserController {
 
 	}
 
+	@GetMapping({ "list_users_for_certification.do" })
+	public String listUsersForCertificationGet(HttpSession session, Model model, RedirectAttributes redir) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 2) {
+			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
+			return "redirect:login.do";
+		}
+
+		List<User> users = new ArrayList<>();
+
+		try {
+			users = userDAO.findAllUsersByOrgId(loggedInUser.getOrganization().getId());
+		} catch (Exception e) {
+			System.out.print("Error in findAllUsersByOrgId");
+			e.printStackTrace();
+		}
+
+		System.out.println(users);
+
+		model.addAttribute("users", users);
+
+		return "clerk/list_users_for_certification";
+
+	}
+	
+	@GetMapping({ "show_user.do" })
+	public String showUserGet( @RequestParam("id") int pilotId,HttpSession session, Model model, RedirectAttributes redir) {
+		
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+		
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+		
+		if (loggedInUser.getRole().getId() != 2) {
+			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
+			return "redirect:login.do";
+		}
+		
+		List<PilotCertification> certifications = new ArrayList<>();
+		
+		try {
+			certifications = pilotDAO.findAllPilotCertification(pilotId);
+		} catch (Exception e) {
+			System.out.print("Error in findAllPilotCertification");
+			e.printStackTrace();
+		}
+		
+		System.out.println(certifications);
+		
+		model.addAttribute("certifications", certifications);
+		
+		return "clerk/show_user_certifications";
+		
+	}
 }

@@ -27,5 +27,8 @@ public interface UserDAO {
 	List<Role> findAllRoles();
 
 	List<Organization> findAllOrganizations();
+	
+	List<User> findAllUsersByOrgId(int orgId);
+	
 
 }

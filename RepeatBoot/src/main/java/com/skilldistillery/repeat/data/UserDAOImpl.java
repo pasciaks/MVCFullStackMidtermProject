@@ -172,4 +172,16 @@ public class UserDAOImpl implements UserDAO {
 		return org;
 	}
 
+	@Override
+	public List<User> findAllUsersByOrgId(int orgId) {
+
+		String jpql = "SELECT user FROM User user WHERE user.organization.id = :orgId";
+		List<User> users = new ArrayList<>();
+		users = em.createQuery(jpql, User.class).setParameter("orgId", orgId ).getResultList();
+		System.out.println(users.size());
+		System.out.println(users);
+		return users;
+	
+	}
+
 }

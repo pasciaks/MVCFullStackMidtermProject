@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.skilldistillery.repeat.entities.AircraftType;
 import com.skilldistillery.repeat.entities.ExperienceType;
+import com.skilldistillery.repeat.entities.PilotCertification;
 import com.skilldistillery.repeat.entities.PilotLogEntry;
 
 public interface PilotDAO {
@@ -28,4 +29,7 @@ public interface PilotDAO {
 	List<AircraftType> findAllAircraftType();
 	
 	Boolean deletePilotLogEntryById(int id);
+	
+	List<PilotCertification> findAllPilotCertification(int pilotId);
+	
 }
