@@ -214,8 +214,9 @@ public class UserController {
 		}
 		
 		System.out.println(certifications);
-		
+
 		model.addAttribute("certifications", certifications);
+		model.addAttribute("currentPilotId", pilotId);
 		
 		return "clerk/show_user_certifications";
 		
