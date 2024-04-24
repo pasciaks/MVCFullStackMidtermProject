@@ -17,21 +17,29 @@
 		<c:if test="${! empty error}">
 			<div class="alert alert-danger" role="alert">${error}</div>
 		</c:if>
-		
-		
+
+
 		<c:if test="${! empty message}">
 			<div class="alert alert-success" role="alert">${message}</div>
 		</c:if>
 
 		<div class="container login">
 
+			<h1>Login</h1>
+
 			<div class="row">
 				<div class="col text-center">
 					<form method="POST" action="login.do">
-						<input type="text" name="username" placeholder="username"><br>
-						<input type="password" name="password" placeholder="password"><br>
-						<input type="submit" value="Login">
-					</form>
+						<p>Username:
+						<p>
+							<input type="text" name="username" placeholder="username"><br>
+						<p>
+							Password: <p>
+					<input type="password" name="password"
+								placeholder="password"><br> 
+								<br>
+								<input type="submit" class="btn btn-primary"
+								value="Login"></form>
 				</div>
 			</div>
 
