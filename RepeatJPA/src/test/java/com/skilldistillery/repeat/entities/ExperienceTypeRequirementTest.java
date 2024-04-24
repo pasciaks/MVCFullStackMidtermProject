@@ -61,7 +61,7 @@ public class ExperienceTypeRequirementTest {
 		assertNotNull(experienceTypeRequirement);
 		assertEquals(1, experienceTypeRequirement.getAircraftType().getId());
 		assertTrue(experienceTypeRequirement.getAircraftType().getEnabled());
-		assertNull(experienceTypeRequirement.getAircraftType().getImageUrl());
+		assertNotNull(experienceTypeRequirement.getAircraftType().getImageUrl());
 	}
 
 	@Test

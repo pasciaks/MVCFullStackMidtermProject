@@ -64,7 +64,7 @@ public class PilotCertificationTest {
 	@Test	
 	void test_PilotCertification_details_mapping() {
 		assertNotNull(pilotCertification);
-		assertEquals("flight physical short", pilotCertification.getDetails());
+		assertEquals("Flight physical short", pilotCertification.getDetails());
 	}
 
 	@Test

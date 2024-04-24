@@ -59,7 +59,7 @@ public class AircraftTypeTest {
 	@Test
 	void test_AircraftType_has_ExperienceTypeRequirements() {
 		assertNotNull(aircraftType);
-		assertEquals(1, aircraftType.getExperienceTypeRequirements().size());
+		assertEquals(3, aircraftType.getExperienceTypeRequirements().size());
 		// System.out.println(aircraftType.getExperienceTypeRequirements().size());
 	}
 	

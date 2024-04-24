@@ -54,7 +54,7 @@ public class CertificationTest {
 	@Test
 	void test_Certification_description_mapping() {
 		assertNotNull(certification);
-		assertEquals("medical", certification.getDescription());
+		assertEquals("Medical", certification.getDescription());
 	}
 	
 	@Test
