@@ -39,12 +39,8 @@
 
 					<c:if test="${loggedInUser.role.name eq 'clerk'}">
 
-						<li><a class="nav-link" href="clerk_list_user_cert.do">List
-								User Certs</a></li>
-						<li><a class="nav-link" href="clerk_add_user_cert.do">Add
-								User Certs</a></li>
-						<li><a class="nav-link" href="clerk_edit_user_cert.do">Edit
-								User Certs</a></li>
+						<li><a class="nav-link" href="list_users_for_certification.do">List
+								Users For Certification</a></li>
 
 					</c:if>
 

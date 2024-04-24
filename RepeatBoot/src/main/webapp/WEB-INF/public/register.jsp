@@ -29,9 +29,6 @@
 				<div class="col">
 					<div class="col text-center">
 						<h1>Register</h1>
-						<img src="../logo.png" width="25%" alt="REPEAT logo"
-							class="img-responsive" />
-						<p></p>
 					</div>
 				</div>
 			</div>

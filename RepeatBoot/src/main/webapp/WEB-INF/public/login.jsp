@@ -25,7 +25,7 @@
 
 		<div class="container login">
 
-			<h1>Login</h1>
+			<h1 class="text-center">Login</h1>
 
 			<div class="row">
 				<div class="col text-center">

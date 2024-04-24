@@ -14,7 +14,6 @@
 
 	<main>
 
-
 		<c:if test="${! empty error}">
 			<div class="alert alert-danger" role="alert">${error}</div>
 		</c:if>
@@ -39,14 +38,14 @@
 
 
 		<div class="container">
-			<table class="table table-bordered">
-				<tr>
-					<th>Start time</th>
-					<th>Stop time</th>
-					<th>Description</th>
-					<th>User</th>
-					<th>Edit</th>
-					<th>Delete</th>
+			<table class="table table-bordered table-striped w-100">
+				<tr class="bg-primary">
+					<th class="text-light">Start time</th>
+					<th class="text-light">Stop time</th>
+					<th class="text-light d-none d-md-block">Description</th>
+					<!-- <th class="text-light">User</th> -->
+					<th class="text-light">Edit</th>
+					<th class="text-light">Delete</th>
 				</tr>
 
 				<c:forEach var="pilotLogEntry" items="${pilotLogEntries}"
@@ -54,9 +53,11 @@
 					<tr>
 						<td>(ID: ${pilotLogEntry.getId()}) ${pilotLogEntry.getStartTime()}</td>
 						<td>${pilotLogEntry.getStopTime()}</td>
-						<td>${pilotLogEntry.getExperienceType().getDescription()}</td>
-						<td>${pilotLogEntry.getUser().getUsername()}</td>
+						<td class="d-none d-md-block">${pilotLogEntry.getExperienceType().getDescription()}</td>
+						<%-- <td>${pilotLogEntry.getUser().getUsername()}</td> --%>
 						<td>
+			
+						
 							<form method="get" action="edit_experience.do">
 								<input type="hidden" name="id" value="${pilotLogEntry.getId()}">
 								<div class="mb-3">
@@ -64,6 +65,11 @@
 										entry</button>
 								</div>
 							</form>
+							
+										
+							<span class="d-block d-md-none">
+								<br>${pilotLogEntry.getExperienceType().getDescription()}
+							</span>
 
 						</td>
 						<td>

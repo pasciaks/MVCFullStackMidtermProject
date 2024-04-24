@@ -39,21 +39,20 @@
 
 		<div class="container">
 
+
+
+			<c:forEach var="experienceType" items="${experienceTypes}"
+				varStatus="loop">
+
 			<table class="table table-bordered">
 				<tr>
 					<th>Start time</th>
 					<th>Stop time</th>
 					<th>Description</th>
 					<th>User</th>
-					<th>Edit</th>
 				</tr>
-			</table>
-
-			<c:forEach var="experienceType" items="${experienceTypes}"
-				varStatus="loop">
-
 			
-				<table class="table table-striped table-bordered">
+			
 
 				<c:forEach var="pilotLogEntry" items="${pilotLogEntries}"
 					varStatus="loop">
@@ -62,11 +61,11 @@
 						test="${pilotLogEntry.experienceType.id eq experienceType.id}">
 
 						<tr>
-							<td>(ID: ${pilotLogEntry.getId()}) ${pilotLogEntry.getStartTime()}</td>
-							<td>${pilotLogEntry.getStopTime()}</td>
-							<td>${pilotLogEntry.getExperienceType().getDescription()}</td>
-							<td>${pilotLogEntry.getUser().getUsername()}</td>
-							<td></td>
+							<td>(ID: ${pilotLogEntry.getId()}) ${pilotLogEntry.getStartTime()} &nbsp;</td>
+							<td>${pilotLogEntry.getStopTime()} &nbsp;</td>
+							<td>${pilotLogEntry.getExperienceType().getDescription()} &nbsp;</td>
+							<td>${pilotLogEntry.getUser().getUsername()} &nbsp;</td>
+							
 						</tr>
 
 					</c:if>
