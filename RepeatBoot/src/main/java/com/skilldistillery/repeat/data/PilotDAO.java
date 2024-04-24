@@ -30,6 +30,8 @@ public interface PilotDAO {
 	List<AircraftType> findAllAircraftType();
 	
 	Boolean deletePilotLogEntryById(int id);
+	
+	Boolean deletePilotCertificationById(int id);
 
 	List<PilotCertification> findAllPilotCertification(int pilotId);
 	

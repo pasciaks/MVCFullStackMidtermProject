@@ -221,9 +221,9 @@ public class UserController {
 		System.out.println(certifications);
 
 		model.addAttribute("certifications", certifications);
-		model.addAttribute("currentPilotId", pilotId);	
+		model.addAttribute("currentPilotId", pilotId);
 		model.addAttribute("pilotId", pilotId);
-		
+
 		System.out.println("currentPilotId: " + pilotId);
 		System.out.println("pilotId: " + pilotId);
 
@@ -269,7 +269,8 @@ public class UserController {
 	@PostMapping({ "add_certification.do" })
 	public String addCertification(@RequestParam("id") int pilotId, @RequestParam("details") String details,
 			@RequestParam("passed") String passed, @RequestParam("expirationDate") LocalDate expirationDate,
-			@RequestParam("effectiveDate") LocalDate effectiveDate, @RequestParam("certificationId") int certificationId, HttpSession session, Model model,
+			@RequestParam("effectiveDate") LocalDate effectiveDate,
+			@RequestParam("certificationId") int certificationId, HttpSession session, Model model,
 			RedirectAttributes redir) {
 
 		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
@@ -286,48 +287,82 @@ public class UserController {
 		}
 
 		PilotCertification pilotCertification = new PilotCertification();
-		
+
 		pilotCertification.setDetails(details);
-		
+
 		pilotCertification.setEffectiveDate(effectiveDate);
-		
+
 		pilotCertification.setExpirationDate(expirationDate);
-		
+
 		pilotCertification.setPassed(passed.equals("1") ? true : false);
-		
+
 		Certification certification = pilotDAO.findCertificationById(certificationId);
-		
+
 		if (certification == null) {
 			redir.addFlashAttribute("message", "Certification not found.");
 			return "redirect:error.do";
 		}
-		
+
 		pilotCertification.setCertification(certification);
-		
+
 		User pilotUser = userDAO.findById(pilotId);
-		
+
 		if (pilotUser == null) {
 			redir.addFlashAttribute("message", "Pilot not found.");
 			return "redirect:error.do";
 		}
-		
+
 		pilotCertification.setUser(pilotUser);
-		
+
 		try {
 			pilotCertification = pilotDAO.addPilotCertification(pilotCertification);
-        } catch (Exception e) {
-            System.out.print("Error in addPilotCertification");
-            e.printStackTrace();
-        }
-		
+		} catch (Exception e) {
+			System.out.print("Error in addPilotCertification");
+			e.printStackTrace();
+		}
+
 		if (pilotCertification == null) {
 			redir.addFlashAttribute("message", "Failed to add certification.");
 			return "redirect:error.do";
 		} else {
 			redir.addFlashAttribute("message", "Successfully added certification.");
-            return "redirect:success.do";
-        }
+			return "redirect:success.do";
+		}
 
+	}
+
+	@PostMapping({ "delete_certification.do" })
+	public String deleteCertification(@RequestParam("id") int certId, HttpSession session, Model model,
+			RedirectAttributes redir) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 2) {
+			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
+			return "redirect:login.do";
+		}
+		Boolean wasDeleted = false;
+
+		try {
+			wasDeleted = pilotDAO.deletePilotCertificationById(certId);
+
+		} catch (Exception e) {
+			wasDeleted = false;
+		}
+
+		if (wasDeleted) {
+			redir.addFlashAttribute("message", "Successfully Deleted");
+			return "redirect:success.do";
+		} else {
+			redir.addFlashAttribute("error", "Was not Deleted");
+			return "redirect:error.do";
+		}
 
 	}
 

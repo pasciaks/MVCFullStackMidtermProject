@@ -208,4 +208,26 @@ public class PilotDAOImpl implements PilotDAO {
 		return certification;
 	}
 
+	@Override
+	public Boolean deletePilotCertificationById(int id) {
+		Boolean wasDeleted = false;
+
+		PilotCertification managed = em.find(PilotCertification.class, id);
+
+		if (managed == null) {
+			return false;
+		}
+
+		try {
+			em.remove(managed);
+			em.flush();
+			wasDeleted = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			wasDeleted = false;
+		}
+
+		return wasDeleted;
+	}
+
 }
