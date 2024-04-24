@@ -268,7 +268,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `repeatdb`;
-INSERT INTO `user` (`id`, `username`, `password`, `date_of_birth`, `image_url`, `enabled`, `created_at`, `updated_at`, `role_id`, `organization_id`) VALUES (1, 'maverick', 'topgun', '1999-04-30', 'https://m.media-amazon.com/images/M/MV5BYWI1ZDQ4ZDItNjk0Ny00ZDcyLWI5MjctMmFkZjdkODI5ZGRlXkEyXkFqcGdeQWRvb2xpbmhk._V1_.jpg', 1, '2024-04-19 10:21:00', '2024-04-19 10:21:00', 1, 1);
+INSERT INTO `user` (`id`, `username`, `password`, `date_of_birth`, `image_url`, `enabled`, `created_at`, `updated_at`, `role_id`, `organization_id`) VALUES (1, 'maverick', 'topgun', '1962-07-03', 'https://m.media-amazon.com/images/M/MV5BYWI1ZDQ4ZDItNjk0Ny00ZDcyLWI5MjctMmFkZjdkODI5ZGRlXkEyXkFqcGdeQWRvb2xpbmhk._V1_.jpg', 1, '2024-04-19 10:21:00', '2024-04-19 10:21:00', 1, 1);
+INSERT INTO `user` (`id`, `username`, `password`, `date_of_birth`, `image_url`, `enabled`, `created_at`, `updated_at`, `role_id`, `organization_id`) VALUES (2, 'admin', 'admin', '1970-02-15', 'images/admin.jpg', 1, '2024-04-19 10:21:00', '2024-04-19 10:21:00', 4, 1);
 
 COMMIT;
 
@@ -278,7 +279,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `repeatdb`;
-INSERT INTO `aircraft_type` (`id`, `aircraft_type`, `image_url`, `enabled`) VALUES (DEFAULT, 'ah64d', NULL, 1);
+INSERT INTO `aircraft_type` (`id`, `aircraft_type`, `image_url`, `enabled`) VALUES (DEFAULT, 'ah64d', 'images/ah64d.jpg', 1);
+INSERT INTO `aircraft_type` (`id`, `aircraft_type`, `image_url`, `enabled`) VALUES (DEFAULT, 'blackhawk', 'images/blackhawk.jpg', 1);
 
 COMMIT;
 
@@ -298,8 +300,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `repeatdb`;
-INSERT INTO `experience_type_requirement` (`id`, `minutes_required`, `aircraft_type_id`) VALUES (DEFAULT, 60, 1);
-
+INSERT INTO `experience_type_requirement` (`id`, `minutes_required`, `aircraft_type_id`) VALUES (1, 60, 1);
+INSERT INTO `experience_type_requirement` (`id`, `minutes_required`, `aircraft_type_id`) VALUES (2, 30, 1);
+INSERT INTO `experience_type_requirement` (`id`, `minutes_required`, `aircraft_type_id`) VALUES (3, 15, 1);
+INSERT INTO `experience_type_requirement` (`id`, `minutes_required`, `aircraft_type_id`) VALUES (4, 15, 2);
 COMMIT;
 
 
@@ -309,6 +313,10 @@ COMMIT;
 START TRANSACTION;
 USE `repeatdb`;
 INSERT INTO `experience_type` (`id`, `description`, `enabled`, `experience_type_requirement_id`) VALUES (1, 'Day flight minutes', 1, 1);
+INSERT INTO `experience_type` (`id`, `description`, `enabled`, `experience_type_requirement_id`) VALUES (2, 'Night flight minutes', 1, 2);
+INSERT INTO `experience_type` (`id`, `description`, `enabled`, `experience_type_requirement_id`) VALUES (3, 'Night vision assisted minutes', 1, 3);
+INSERT INTO `experience_type` (`id`, `description`, `enabled`, `experience_type_requirement_id`) VALUES (4, 'Blackhawk specific training minutes', 1, 4);
+
 
 COMMIT;
 
@@ -328,9 +336,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `repeatdb`;
-INSERT INTO `certification` (`id`, `description`, `required`) VALUES (DEFAULT, 'medical', 1);
-INSERT INTO `certification` (`id`, `description`, `required`) VALUES (DEFAULT, 'clearance', 1);
-INSERT INTO `certification` (`id`, `description`, `required`) VALUES (DEFAULT, 'gun table 6', 1);
+INSERT INTO `certification` (`id`, `description`, `required`) VALUES (DEFAULT, 'Medical', 1);
+INSERT INTO `certification` (`id`, `description`, `required`) VALUES (DEFAULT, 'Security Clearance', 1);
+INSERT INTO `certification` (`id`, `description`, `required`) VALUES (DEFAULT, 'Gun Table 6', 1);
 
 COMMIT;
 
@@ -340,8 +348,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `repeatdb`;
-INSERT INTO `pilot_certification` (`id`, `effective_date`, `details`, `passed`, `certification_id`, `user_id`, `expiration_date`) VALUES (DEFAULT, '2023-01-01', 'flight physical short', 1, 1, 1, NULL);
-INSERT INTO `pilot_certification` (`id`, `effective_date`, `details`, `passed`, `certification_id`, `user_id`, `expiration_date`) VALUES (DEFAULT, '2024-02-12', 'ts/sci', 1, 2, 1, NULL);
+INSERT INTO `pilot_certification` (`id`, `effective_date`, `details`, `passed`, `certification_id`, `user_id`, `expiration_date`) VALUES (DEFAULT, '2023-01-01', 'Flight physical short', 1, 1, 1, NULL);
+INSERT INTO `pilot_certification` (`id`, `effective_date`, `details`, `passed`, `certification_id`, `user_id`, `expiration_date`) VALUES (DEFAULT, '2024-02-12', 'TS/SCI', 1, 2, 1, NULL);
 
 COMMIT;
 

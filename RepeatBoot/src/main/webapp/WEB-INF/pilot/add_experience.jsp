@@ -45,15 +45,32 @@
 					value="${sessionScope.loggedInUser.id}">
 
 				<div class="mb-3">
-					<label for="startTime" class="form-label">Start time:</label> <input
+				
+					<label for="startTime" class="form-label">Start time:</label> 
+					
+					<input class="form-control" type="datetime-local" id="startTime" name="startTime" required
+						value="${pilotLogEntry.getStartTime()}">
+				
+<!-- 					<label for="startTime" class="form-label">Start time:</label> <input
 						type="text" class="form-control" id="startTime" name="startTime"
-						value="">
+						value=""> -->
+						
+						
 				</div>
 
 				<div class="mb-3">
-					<label for="stopTime" class="form-label">Stop time:</label> <input
+				
+						<label for="stopTime" class="form-label">Stop time:</label>
+						
+						
+						<input class="form-control" type="datetime-local" id="stopTime" name="stopTime" 
+							value="${pilotLogEntry.getStopTime()}"> 
+				
+<!-- 					<label for="stopTime" class="form-label">Stop time:</label> <input
 						type="text" class="form-control" id="stopTime" name="stopTime"
-						value="">
+						value=""> -->
+						
+						
 				</div>
 
 				<div class="mb-3">

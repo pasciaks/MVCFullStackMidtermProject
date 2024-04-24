@@ -32,11 +32,11 @@
 					<form method="POST" action="login.do">
 						<p>Username:
 						<p>
-							<input type="text" name="username" placeholder="username"><br>
+							<input type="text" name="username" placeholder="username" value="maverick"><br>
 						<p>
 							Password: <p>
 					<input type="password" name="password"
-								placeholder="password"><br> 
+								placeholder="password" value="topgun"><br> 
 								<br>
 								<input type="submit" class="btn btn-primary"
 								value="Login"></form>

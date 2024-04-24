@@ -49,6 +49,8 @@
 									alt="Image Url for user with id : ${user.id}" title="Image Url for user with id : ${user.id}" width="100"></td>
 								<td>${user.username}</td>
 								<td>${user.enabled == true ? '<span class="text-success">enabled</span>' :  '<span class="text-danger">disabled</span>' }</td>
+								
+								<td>${user.organization.name}</td>
 
 								<td>
 									<form method="post" action="enable_user.do">

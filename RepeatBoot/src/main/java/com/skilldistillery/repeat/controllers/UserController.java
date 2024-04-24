@@ -58,7 +58,7 @@ public class UserController {
 		}
 		System.out.println(authenticatedUser);
 		if (authenticatedUser == null) {
-			mv.addObject("error", "Could not login. Verify credentials or user activation with admin.");
+			mv.addObject("error", "Could not login. Verify your credentials are correct - NOTE: Newly registered accounts must be activated by admin before use is allowed.");
 		}
 		return mv;
 	}
@@ -67,41 +67,45 @@ public class UserController {
 	public ModelAndView registerPost(@RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("imageUrl") String imageUrl,
 			@RequestParam("roleId") String roleId, @RequestParam("organizationId") String organizationId,
-			@RequestParam("dateOfBirth") LocalDate dateOfBirth, HttpSession session) {
-
-		// TODO: check that dateOfBirth can come in as ISO string yyyy-mm-dd
+			@RequestParam("dateOfBirth") LocalDate dateOfBirth, HttpSession session, RedirectAttributes redir) {
 
 		ModelAndView mv = new ModelAndView();
 
-		System.out.println(username);
-		System.out.println(password);
-		System.out.println(imageUrl);
-		System.out.println(roleId);
-		System.out.println(organizationId);
-		System.out.println(dateOfBirth);
-
-		// LocalDate dateOfBirthLocalDateObject = LocalDate.parse(dateOfBirth,
-		// DateTimeFormatter.ISO_DATE);
-
-		// use DAO to attempt to create new registration
-
 		User registeredUser = null;
+		
+		// see if the user already exists in the database and if so, return an error stating that the user already exists
+		
+		List<User> users = userDAO.findAllUser();
+		
+		for (User user : users) {
+			if (user.getUsername().equals(username)) {
+				mv.addObject("error", "User already exists.");
+				redir.addFlashAttribute("error", "User already exists.");
+				mv.setViewName("redirect:error.do");
+				return mv;
+			}
+		}
+		
+		// if the user does not exist, then create a new user and return a success message
 
 		try {
 			registeredUser = userDAO.registerUser(username, password, imageUrl, roleId, organizationId, dateOfBirth);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("error", e.getMessage());
-			mv.setViewName("error");
+			redir.addFlashAttribute("error", " " + e.getMessage());
+			mv.setViewName("redirect:error.do");
 		}
 
 		if (registeredUser == null) {
 			System.out.println("Failed to register user.");
 			mv.addObject("error", "Failed to register user.");
+			redir.addFlashAttribute("error", "Failed to register user.");
 			mv.setViewName("redirect:error.do");
 		} else {
 			System.out.println("Successfully registered user.");
 			mv.addObject("message", "Successfully registered user, please login.");
+			redir.addFlashAttribute("message", "Successfully registered user, please login.");
 			mv.setViewName("redirect:login.do");
 		}
 
@@ -118,14 +122,7 @@ public class UserController {
 	@PostMapping({ "update_profile.do" })
 	public String updateProfile(User user, HttpSession session, RedirectAttributes redir) {
 
-		// TODO: check that dateOfBirth can come in as ISO string yyyy-mm-dd
-
 		ModelAndView mv = new ModelAndView();
-
-		// LocalDate dateOfBirthLocalDateObject = LocalDate.parse(dateOfBirth,
-		// DateTimeFormatter.ISO_DATE);
-
-		// use DAO to attempt to create new registration
 
 		User updatedUser = null;
 
@@ -133,8 +130,7 @@ public class UserController {
 			updatedUser = userDAO.updateUser(user.getId(), user);
 		} catch (Exception e) {
 			e.printStackTrace();
-			redir.addFlashAttribute("error", " *** TODO: ** " + e.getMessage());
-			// TDOO: Capture specific error case for duplicate username, etc
+			redir.addFlashAttribute("error", " " + e.getMessage());
 			return "redirect:error.do";
 		}
 
@@ -147,7 +143,6 @@ public class UserController {
 		} else {
 			session.setAttribute("loggedInUser", updatedUser);
 			System.out.println("Successfully updated user.");
-			// mv.addObject("message", "Successfully updated user.");
 			redir.addFlashAttribute("error", null);
 			redir.addFlashAttribute("message", "Successfully updated user.!!");
 			return "redirect:success.do";

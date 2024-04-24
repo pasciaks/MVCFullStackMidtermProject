@@ -23,8 +23,6 @@
 				</c:if>
 
 				<c:if test="${! empty loggedInUser}">
-					<li><a class="nav-link" href="logout.do">Logout</a></li>
-					<li><a class="nav-link" href="profile.do">Profile</a></li>
 
 
 					<c:if test="${loggedInUser.role.name eq 'pilot'}">
@@ -33,7 +31,7 @@
 								Flight Log</a></li>
 						<li><a class="nav-link" href="list_experience.do">See
 								Flight Logs</a></li>
-						<li><a class="nav-link" href="evaluate_experience.do">Evaluate
+						<li><a class="nav-link" href="choose_aircraft_type.do">Evaluate
 								Flight Logs</a></li>
 
 					</c:if>
@@ -64,6 +62,10 @@
 						<li><a class="nav-link" href="list_user.do">Users</a></li>
 
 					</c:if>
+					
+					
+					<li><a class="nav-link" href="logout.do">Logout</a></li>
+					<li><a class="nav-link" href="profile.do">Profile</a></li>
 
 				</c:if>
 
@@ -75,12 +77,12 @@
 <div class="container bg-light bordered">
 	<c:if test="${! empty sessionScope.loggedInUser}">
 		<div class="row">
-			<div class="col">
+			<div class="col text-center">
 				<img onerror="this.style.display='none';"
 					src="${sessionScope.loggedInUser.imageUrl}" alt="Image Url"
-					width="100">
+					height="100">
 			</div>
-			<div class="col">
+			<div class="col text-center">
 				<p>Username: ${sessionScope.loggedInUser.username}</p>
 				<p>Role:${sessionScope.loggedInUser.role.getName()}</p>
 			</div>

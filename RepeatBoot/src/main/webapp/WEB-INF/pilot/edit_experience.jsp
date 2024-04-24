@@ -43,17 +43,35 @@
 
 				<input type="hidden" id="id" name="id"
 					value="${sessionScope.loggedInUser.id}">
+					
+					<!-- NOTE: This was a flaw that needed fixed, both the userId and the pilot log entry id mismatch, etc. -->
+					
+				<input type="hidden" id="pilogLogEntryId" name="pilogLogEntryId"
+					value="${pilotLogEntry.id}">
 
 				<div class="mb-3">
-					<label for="startTime" class="form-label">Start time:</label> <input
-						type="text" class="form-control" id="startTime" name="startTime"
+					<label for="startTime" class="form-label">Start time:</label> 
+					
+					<input class="form-control" type="datetime-local" id="startTime" name="startTime" required
 						value="${pilotLogEntry.getStartTime()}">
+					
+<%-- 					<input
+						type="text" class="form-control" id="startTime" name="startTime" required
+						value="${pilotLogEntry.getStartTime()}"> --%>
+						
 				</div>
 
 				<div class="mb-3">
-					<label for="stopTime" class="form-label">Stop time:</label> <input
+					<label for="stopTime" class="form-label">Stop time:</label>
+					
+					
+					<input class="form-control" type="datetime-local" id="stopTime" name="stopTime" 
+						value="${pilotLogEntry.getStopTime()}"> 
+						
+<%-- 					 <input
 						type="text" class="form-control" id="stopTime" name="stopTime"
-						value="${pilotLogEntry.getStopTime()}">
+						value="${pilotLogEntry.getStopTime()}"> --%>
+						
 				</div>
 
 				<div class="mb-3">

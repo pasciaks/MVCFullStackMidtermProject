@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.repeat.entities.AircraftType;
 import com.skilldistillery.repeat.entities.ExperienceType;
 import com.skilldistillery.repeat.entities.PilotLogEntry;
 import com.skilldistillery.repeat.entities.User;
@@ -38,7 +39,7 @@ public class PilotDAOImpl implements PilotDAO {
 
 	@Override
 	public List<ExperienceType> findAllExperienceTypes() {
-		String jpql = "SELECT et FROM ExperienceType et";
+		String jpql = "SELECT et FROM ExperienceType et order by et.id asc";
 		List<ExperienceType> experienceTypes = new ArrayList<>();
 		experienceTypes = em.createQuery(jpql, ExperienceType.class).getResultList();
 		System.out.println(experienceTypes.size());
@@ -47,28 +48,37 @@ public class PilotDAOImpl implements PilotDAO {
 	}
 
 	@Override
+	public List<AircraftType> findAllAircraftType() {
+		String jpql = "SELECT aircraft from AircraftType aircraft order by aircraft.id asc";
+		List<AircraftType> aircraftTypes = new ArrayList<>();
+		aircraftTypes = em.createQuery(jpql, AircraftType.class).getResultList();
+		System.out.println(aircraftTypes.size());
+		System.out.println(aircraftTypes);
+		return aircraftTypes;
+	}
+
+	@Override
+	public List<ExperienceType> findAllExperienceTypesByAircraftTypeId(int aircraftTypeId) {
+		String jpql = "SELECT et FROM ExperienceType et JOIN FETCH ExperienceTypeRequirement etr ON etr.id = et.experienceTypeRequirement.id WHERE etr.aircraftType.id = :atid order by et.id asc";
+		List<ExperienceType> experienceTypes = new ArrayList<>();
+		experienceTypes = em.createQuery(jpql, ExperienceType.class).setParameter("atid", aircraftTypeId)
+				.getResultList();
+		System.out.println(experienceTypes.size());
+		System.out.println(experienceTypes);
+		return experienceTypes;
+	}
+
+	@Override
 	public List<PilotLogEntry> findAllPilotLogEntries(int userId) {
-		
-		
-		
+
 		String jpql = "SELECT ple FROM PilotLogEntry ple WHERE ple.user.id = :userId order by ple.id asc";
-		
-		
+
 		List<PilotLogEntry> pilotLogEntries = new ArrayList<>();
-		
+
 		pilotLogEntries = em.createQuery(jpql, PilotLogEntry.class).setParameter("userId", userId).getResultList();
-		
-		//User user = em.find(User.class, userId);
-		
-		//return user.getPilotLogEntries();
-		
+
 		return pilotLogEntries;
-		
-		
-		
-		
-		
-		
+
 	}
 
 	@Override
@@ -90,7 +100,7 @@ public class PilotDAOImpl implements PilotDAO {
 		managed.setStopTime(pilotLogEntry.getStopTime());
 		managed.setUser(pilotLogEntry.getUser());
 		managed.setExperienceType(pilotLogEntry.getExperienceType());
-		
+
 		System.out.println("-----------");
 		System.out.println(managed.getExperienceType().getId());
 
@@ -105,7 +115,7 @@ public class PilotDAOImpl implements PilotDAO {
 		System.out.println(managed);
 
 		return managed;
-	
+
 	}
 
 	@Override
@@ -113,5 +123,40 @@ public class PilotDAOImpl implements PilotDAO {
 		ExperienceType experienceType = em.find(ExperienceType.class, id);
 		return experienceType;
 	}
-	
+
+	@Override
+	public List<PilotLogEntry> findAllPilotLogEntries(int userId, LocalDateTime startedAfterDateTime) {
+		String jpql = "SELECT ple FROM PilotLogEntry ple WHERE ple.user.id = :userId and ple.startTime >= :startTime order by ple.id asc";
+
+		List<PilotLogEntry> pilotLogEntries = new ArrayList<>();
+
+		pilotLogEntries = em.createQuery(jpql, PilotLogEntry.class).setParameter("userId", userId)
+				.setParameter("startTime", startedAfterDateTime).getResultList();
+
+		return pilotLogEntries;
+	}
+
+	@Override
+	public Boolean deletePilotLogEntryById(int id) {
+
+		Boolean wasDeleted = false;
+
+		PilotLogEntry managed = em.find(PilotLogEntry.class, id);
+
+		if (managed == null) {
+			return false;
+		}
+		
+		try {
+			em.remove(managed);
+			em.flush();
+			wasDeleted = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			wasDeleted = false;
+		}
+
+		return wasDeleted;
+	}
+
 }
