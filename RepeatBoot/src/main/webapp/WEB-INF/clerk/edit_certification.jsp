@@ -29,7 +29,7 @@
 
 			<div class="row">
 				<div class="col">
-					<h1>Add Certification</h1>
+					<h1>Edit Certification</h1>
 				</div>
 			</div>
 		</div>
@@ -37,9 +37,15 @@
 
 		<div class="container">
 
-			<form action="add_certification.do" method="post">
+			<form action="edit_certification.do" method="post">
 
-				<input type="hidden" id="id" name="id" value="${currentPilotId}">
+				<c:set var="certTypeId" value="${certification.certification.id}" />
+
+				<input type="hidden" id="pilotId" name="pilotId"
+					value="${currentPilotId}"> 
+					
+				<input type="hidden" id="id"
+					name="id" value="${certId}">
 
 
 				<div class="mb-3">
@@ -77,13 +83,18 @@
 
 				<div class="mb-3">
 
-					<label for="passed" class="form-label">Passed or Failed</label> <select
-						name="passed" id="passed" class="form-select" aria-label="passed"
-						required>
+
+					${certification.passed} 
+					
+					<label for="passed" class="form-label">Passed
+						or Failed</label> <select name="passed" id="passed" class="form-select"
+						aria-label="passed" required>
 
 						<option value="">Choose One</option>
-						<option value="0">Failed</option>
-						<option value="1">Passed</option>
+						<option ${certification.passed eq false ? 'selected' : ''}
+							value="0">Failed</option>
+						<option ${certification.passed eq true ? 'selected' : ''}
+							value="1">Passed</option>
 
 					</select>
 
@@ -101,16 +112,18 @@
 
 						<option value="">Choose one</option>
 
-						<c:forEach var="certification" items="${certifications}"
+						<c:forEach var="certificationType" items="${certifications}"
 							varStatus="loop">
-							<option value="${certification.getId()}">${certification.getDescription()}</option>
+							<option
+								${certificationType.getId() == certTypeId ? "selected" : "" }
+								value="${certificationType.getId()}">${certificationType.getDescription()}</option>
 						</c:forEach>
 
 					</select>
 
 				</div>
 
-				<button type="submit" class="btn btn-primary">Add
+				<button type="submit" class="btn btn-primary">Update
 					Certification</button>
 
 			</form>

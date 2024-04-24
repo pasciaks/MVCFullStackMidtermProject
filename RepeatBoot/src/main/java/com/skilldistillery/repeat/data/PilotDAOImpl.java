@@ -186,7 +186,7 @@ public class PilotDAOImpl implements PilotDAO {
 	public PilotCertification addPilotCertification(PilotCertification pilotCertification) {
 
 		PilotCertification newManagedPilotCertification = new PilotCertification();
-		
+
 		newManagedPilotCertification.setCertification(pilotCertification.getCertification());
 		newManagedPilotCertification.setDetails(pilotCertification.getDetails());
 		newManagedPilotCertification.setExpirationDate(pilotCertification.getExpirationDate());
@@ -194,11 +194,11 @@ public class PilotDAOImpl implements PilotDAO {
 		newManagedPilotCertification.setPassed(pilotCertification.getPassed());
 		newManagedPilotCertification.setUser(pilotCertification.getUser());
 		newManagedPilotCertification.setCertification(pilotCertification.getCertification());
-		
+
 		em.persist(newManagedPilotCertification);
-		
+
 		em.flush();
-		
+
 		return newManagedPilotCertification;
 	}
 
@@ -228,6 +228,36 @@ public class PilotDAOImpl implements PilotDAO {
 		}
 
 		return wasDeleted;
+	}
+
+	@Override
+	public PilotCertification findPilotCertificationById(int id) {
+		PilotCertification pilotCertification = em.find(PilotCertification.class, id);
+		return pilotCertification;
+	}
+
+	@Override
+	public PilotCertification updatePilotCertification(int certId, PilotCertification pilotCertification) {
+		
+		PilotCertification managed = em.find(PilotCertification.class, certId);
+		
+		if (managed == null) {
+			return null;
+		}
+
+		managed.setCertification(pilotCertification.getCertification());
+		managed.setDetails(pilotCertification.getDetails());
+		managed.setExpirationDate(pilotCertification.getExpirationDate());
+		managed.setEffectiveDate(pilotCertification.getEffectiveDate());
+		managed.setPassed(pilotCertification.getPassed());
+		managed.setUser(pilotCertification.getUser());
+		managed.setCertification(pilotCertification.getCertification());
+
+		em.persist(managed);
+
+		em.flush();
+
+		return managed;
 	}
 
 }

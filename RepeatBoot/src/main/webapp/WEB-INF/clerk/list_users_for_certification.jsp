@@ -28,10 +28,7 @@
 			<div class="row">
 				<div class="col">
 					<h1>Users List For Clerk</h1>
-					<c:if test="${! empty sessionScope.loggedInUser}">
-						<p>${sessionScope.loggedInUser.username}</p>
-					</c:if>
-
+			
 					<c:if test="${! empty message}">
 						<div class="alert alert-success">${message}</div>
 					</c:if>
@@ -65,10 +62,6 @@
 
 				</div>
 			</div>
-
-
-
-
 
 		</div>
 

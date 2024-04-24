@@ -36,9 +36,13 @@ public interface PilotDAO {
 	List<PilotCertification> findAllPilotCertification(int pilotId);
 	
 	List<Certification> findAllCertification();
-	
+
 	PilotCertification addPilotCertification(PilotCertification pilotCertification);
 	
+	PilotCertification updatePilotCertification(int certId, PilotCertification pilotCertification);
+	
 	Certification findCertificationById(int id);
+	
+	PilotCertification findPilotCertificationById(int id);
 	
 }

@@ -365,5 +365,123 @@ public class UserController {
 		}
 
 	}
+	
+	
+	@GetMapping({ "edit_certification.do" })
+	public String editCertification(@RequestParam("pilotId") int pilotId, @RequestParam("id") int certId, HttpSession session, Model model,
+			RedirectAttributes redir) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 2) {
+			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
+			return "redirect:login.do";
+		}
+		
+		PilotCertification pilotCertification = null;
+
+		try {
+			pilotCertification = pilotDAO.findPilotCertificationById(certId);
+		} catch (Exception e) {
+			System.out.print("Error in findCertificationById");
+			e.printStackTrace();
+		}
+		
+		if (pilotCertification == null) {
+			redir.addFlashAttribute("message", "Certification not found.");
+			return "redirect:error.do";
+		}
+
+		System.out.println(pilotCertification);
+		
+		List<Certification> certifications = new ArrayList<>();
+
+		try {
+			certifications = pilotDAO.findAllCertification();
+		} catch (Exception e) {
+			System.out.print("Error in findAllCertification");
+			e.printStackTrace();
+		}
+
+		System.out.println(certifications);
+		
+		// consider renaming certification to pilotCertification, but don't do it -- too many impacts on the add/edit_certification.jsp pages
+
+		model.addAttribute("certifications", certifications);
+		model.addAttribute("certification", pilotCertification);
+		model.addAttribute("currentPilotId", pilotId);
+		model.addAttribute("certId", certId);
+
+		return "clerk/edit_certification";
+
+	}
+	
+	@PostMapping({ "edit_certification.do" })
+	public String editCertification(@RequestParam("id") int certId, @RequestParam("pilotId") int pilotId, @RequestParam("details") String details,
+			@RequestParam("passed") String passed, @RequestParam("expirationDate") LocalDate expirationDate,
+			@RequestParam("effectiveDate") LocalDate effectiveDate,
+			@RequestParam("certificationId") int certificationId, HttpSession session, Model model,
+			RedirectAttributes redir) {
+
+		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
+				: null;
+
+		if (loggedInUser == null) {
+			redir.addFlashAttribute("message", "You must be logged in.");
+			return "redirect:login.do";
+		}
+
+		if (loggedInUser.getRole().getId() != 2) {
+			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
+			return "redirect:login.do";
+		}
+
+		PilotCertification pilotCertification = new PilotCertification();
+
+		pilotCertification.setDetails(details);
+		pilotCertification.setEffectiveDate(effectiveDate);
+		pilotCertification.setExpirationDate(expirationDate);
+		pilotCertification.setPassed(passed.equals("1") ? true : false);
+
+		Certification certification = pilotDAO.findCertificationById(certificationId);
+
+		if (certification == null) {
+			redir.addFlashAttribute("message", "Certification not found.");
+			return "redirect:error.do";
+		}
+
+		pilotCertification.setCertification(certification);
+
+		User pilotUser = userDAO.findById(pilotId);
+
+		if (pilotUser == null) {
+			redir.addFlashAttribute("message", "Pilot not found.");
+			return "redirect:error.do";
+		}
+
+		pilotCertification.setUser(pilotUser);
+
+		try {
+			pilotCertification = pilotDAO.updatePilotCertification(certId, pilotCertification);
+		} catch (Exception e) {
+			System.out.print("Error in updatePilotCertification");
+			e.printStackTrace();
+		}
+
+		if (pilotCertification == null) {
+			redir.addFlashAttribute("message", "Failed to update certification.");
+			return "redirect:error.do";
+		} else {
+			redir.addFlashAttribute("message", "Successfully updated certification.");
+			return "redirect:success.do";
+		}
+
+	}
 
 }

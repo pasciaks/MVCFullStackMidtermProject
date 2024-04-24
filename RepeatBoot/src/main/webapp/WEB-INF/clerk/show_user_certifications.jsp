@@ -48,10 +48,6 @@
 						</div>
 					</c:if>
 
-
-					<p>pilotId: ${pilotId}</p>
-					<p>currentPilotId: ${currentPilotId}</p>
-
 					<c:if test="${currentPilotId != loggedInUser.id}">
 
 						<form method="GET"
@@ -71,6 +67,7 @@
 								<th class="text-center">Details</th>
 								<th class="text-center">Effective Date</th>
 								<th class="text-center">Expiration Date</th>
+								<th class="text-center">Passed/Failed</th>
 								<th class="text-center">Edit</th>
 								<th class="text-center">Delete</th>
 							</tr>
@@ -84,6 +81,8 @@
 									null ? '_____' : certification.effectiveDate }</td>
 									<td class="text-center">${certification.expirationDate == null ? '_____' : certification.expirationDate }</td>
 
+									<td>${certification.passed ? 'Passed' : 'Failed'}</td>
+									
 									<td>
 										<form method="GET" action="edit_certification.do">
 											<input type="hidden" name="id" value="${certification.id}" />
