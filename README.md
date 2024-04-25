@@ -1,6 +1,6 @@
 # MVCFullStackMidtermProject
 
-![Welcome](0.png)
+
 
 #### Description
 
@@ -35,6 +35,7 @@
     - Planning with a wiring diagram and needed models was helpful.
     - Trello board kept us on target.
 
+![Entity Relationship Diagram](REPEAT_ERD_APPROVED.png)
 <hr>
 
 [About The Developers-Sheldon](https://www.linkedin.com/in/sheldonpasciak/)
