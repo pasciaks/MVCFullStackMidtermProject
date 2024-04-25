@@ -29,7 +29,7 @@
 				<div class="col">
 					<div class="col text-center">
 						<h1>About</h1>
-						<img src="../logo.png" width="30%" alt="REPEAT logo"
+						<img src="logo.png" width="30%" alt="REPEAT logo"
 							class="img-responsive shadow hover-zoom" /> <br> <br>
 						<hr>
 
