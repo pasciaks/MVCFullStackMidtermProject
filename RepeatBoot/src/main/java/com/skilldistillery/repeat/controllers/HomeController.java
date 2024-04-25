@@ -34,6 +34,16 @@ public class HomeController {
 		return "public/about";
 	}
 
+	@GetMapping({ "error.do" })
+	public String error() {
+		return "error";
+	}
+
+	@GetMapping({ "success.do" })
+	public String success() {
+		return "success";
+	}
+
 	@GetMapping({ "profile.do" })
 	public String profile(Model model, HttpSession session, RedirectAttributes redir) {
 
@@ -53,20 +63,10 @@ public class HomeController {
 
 		List<Role> roles = userDAO.findAllRoles();
 		List<Organization> organizations = userDAO.findAllOrganizations();
-		model.addAttribute("roles", roles );
+		model.addAttribute("roles", roles);
 		model.addAttribute("organizations", organizations);
-		
+
 		return "private/profile";
-	}
-
-	@GetMapping({ "error.do" })
-	public String error() {
-		return "error";
-	}
-
-	@GetMapping({ "success.do" })
-	public String success() {
-		return "success";
 	}
 
 }

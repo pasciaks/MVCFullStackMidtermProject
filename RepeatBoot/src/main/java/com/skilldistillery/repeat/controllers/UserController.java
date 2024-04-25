@@ -1,16 +1,13 @@
 package com.skilldistillery.repeat.controllers;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -80,8 +77,7 @@ public class UserController {
 
 		User registeredUser = null;
 
-		// see if the user already exists in the database and if so, return an error
-		// stating that the user already exists
+		// see if the user already exists in the database
 
 		List<User> users = userDAO.findAllUser();
 
@@ -94,8 +90,7 @@ public class UserController {
 			}
 		}
 
-		// if the user does not exist, then create a new user and return a success
-		// message
+		// if the user does not exist, then create a new user
 
 		try {
 			registeredUser = userDAO.registerUser(username, password, imageUrl, roleId, organizationId, dateOfBirth);
@@ -365,11 +360,10 @@ public class UserController {
 		}
 
 	}
-	
-	
+
 	@GetMapping({ "edit_certification.do" })
-	public String editCertification(@RequestParam("pilotId") int pilotId, @RequestParam("id") int certId, HttpSession session, Model model,
-			RedirectAttributes redir) {
+	public String editCertification(@RequestParam("pilotId") int pilotId, @RequestParam("id") int certId,
+			HttpSession session, Model model, RedirectAttributes redir) {
 
 		User loggedInUser = session.getAttribute("loggedInUser") != null ? (User) session.getAttribute("loggedInUser")
 				: null;
@@ -383,7 +377,7 @@ public class UserController {
 			redir.addFlashAttribute("message", "You must be logged in as Clerk to manage certifications.");
 			return "redirect:login.do";
 		}
-		
+
 		PilotCertification pilotCertification = null;
 
 		try {
@@ -392,14 +386,14 @@ public class UserController {
 			System.out.print("Error in findCertificationById");
 			e.printStackTrace();
 		}
-		
+
 		if (pilotCertification == null) {
 			redir.addFlashAttribute("message", "Certification not found.");
 			return "redirect:error.do";
 		}
 
 		System.out.println(pilotCertification);
-		
+
 		List<Certification> certifications = new ArrayList<>();
 
 		try {
@@ -410,8 +404,9 @@ public class UserController {
 		}
 
 		System.out.println(certifications);
-		
-		// consider renaming certification to pilotCertification, but don't do it -- too many impacts on the add/edit_certification.jsp pages
+
+		// consider renaming certification to pilotCertification, but don't do it -- too
+		// many impacts on the add/edit_certification.jsp pages
 
 		model.addAttribute("certifications", certifications);
 		model.addAttribute("certification", pilotCertification);
@@ -421,10 +416,11 @@ public class UserController {
 		return "clerk/edit_certification";
 
 	}
-	
+
 	@PostMapping({ "edit_certification.do" })
-	public String editCertification(@RequestParam("id") int certId, @RequestParam("pilotId") int pilotId, @RequestParam("details") String details,
-			@RequestParam("passed") String passed, @RequestParam("expirationDate") LocalDate expirationDate,
+	public String editCertification(@RequestParam("id") int certId, @RequestParam("pilotId") int pilotId,
+			@RequestParam("details") String details, @RequestParam("passed") String passed,
+			@RequestParam("expirationDate") LocalDate expirationDate,
 			@RequestParam("effectiveDate") LocalDate effectiveDate,
 			@RequestParam("certificationId") int certificationId, HttpSession session, Model model,
 			RedirectAttributes redir) {

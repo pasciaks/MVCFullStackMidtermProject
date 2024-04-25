@@ -45,10 +45,10 @@
 					<a class="nav-link"
 						href="evaluate_experience.do?aircraftTypeId=${aircraftType.id}">
 						<div class="card-body">
-							<h5 class="card-title">${aircraftType.id}
-								${aircraftType.aircraftType}</h5>
+							<h5 class="card-title">ID:(${aircraftType.id})&nbsp;${aircraftType.aircraftType}</h5>
 							<p class="card-text">
-								<img src="${aircraftType.imageUrl}" width="100" />
+								<img class="aircraft-type img-responsive shadow hover-zoom"
+									src="${aircraftType.imageUrl}" width="100" />
 							</p>
 
 						</div>

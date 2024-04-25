@@ -1,6 +1,7 @@
 <style>
 * {
-	font-family: 'Arial', sans-serif;
+	font-family: 'Tahoma', sans-serif ;
 }
+
 
 </style>

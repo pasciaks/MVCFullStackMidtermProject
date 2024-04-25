@@ -1,6 +1,5 @@
 package com.skilldistillery.repeat.controllers;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.repeat.data.PilotDAO;
@@ -50,6 +47,7 @@ public class PilotController {
 			redir.addFlashAttribute("message", "You must be logged in as an pilot to add pilot log entries.");
 			return "redirect:login.do";
 		}
+
 		List<ExperienceType> experienceTypes = new ArrayList<>();
 
 		try {
@@ -83,11 +81,6 @@ public class PilotController {
 			return "redirect:login.do";
 		}
 
-		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd
-		// HH:mm");
-		// LocalDateTime startTime = LocalDateTime.parse(startTimeStr, formatter);
-		// LocalDateTime stopTime = LocalDateTime.parse(stopTimeStr, formatter);
-
 		if (startTimeStr == null || startTimeStr.equals("")) {
 			//
 		} else {
@@ -119,9 +112,9 @@ public class PilotController {
 		}
 
 		pilotDAO.addPilotLog(startTime, stopTime, experienceTypeId, loggedInUser.getId());
-		
+
 		redir.addFlashAttribute("message", "Flight has been logged.");
-		
+
 		return "redirect:success.do";
 
 	}
@@ -257,8 +250,6 @@ public class PilotController {
 		pilotLogEntryDetails.setUser(user);
 		pilotLogEntryDetails.setExperienceType(experienceType);
 
-		// NOTE: this was mistakenly using the pilot user id and not the actual pilot
-		// log entry id!
 		pilotDAO.updatePilotLog(pilogLogEntryId, pilotLogEntryDetails);
 
 		redir.addFlashAttribute("message", "Flight has been updated. " + experienceType.getId() + ", "
@@ -328,11 +319,11 @@ public class PilotController {
 
 		try {
 
-//			pilotLogEntries = pilotDAO.findAllPilotLogEntries(loggedInUser.getId());
+			// pilotLogEntries = pilotDAO.findAllPilotLogEntries(loggedInUser.getId());
 
 			LocalDateTime now = LocalDateTime.now();
 
-			LocalDateTime aYearAgo = now.minusDays(365); // 365 days ago, TESTING // TODO // NOTE
+			LocalDateTime aYearAgo = now.minusDays(365); // 365 days ago
 
 			pilotLogEntries = pilotDAO.findAllPilotLogEntries(loggedInUser.getId(), aYearAgo);
 
@@ -343,15 +334,15 @@ public class PilotController {
 
 		// NOTE: This is a temporary solution to the problem of summing up the minutes
 
-		int[] sum = new int[999];
+		int MAX_IDS = 999;
 
-		for (int i = 0; i < 999; i++) {
+		int[] sum = new int[MAX_IDS];
+
+		for (int i = 0; i < MAX_IDS; i++) {
 			sum[i] = 0;
 		}
 
 		for (PilotLogEntry pilotLogEntry : pilotLogEntries) {
-
-			// TODO: EXPIRED LOGS any thing that is older than ??? should not be included...
 
 			long minutes = 0;
 
@@ -368,7 +359,7 @@ public class PilotController {
 			System.out.println(pilotLogEntry.getExperienceType().getDescription() + " " + minutes);
 		}
 
-		for (int j = 0; j < 999; j++) {
+		for (int j = 0; j < MAX_IDS; j++) {
 			if (sum[j] > 0) {
 				System.out.println("Experience Type ID: " + j + " Minutes: " + sum[j]);
 			}

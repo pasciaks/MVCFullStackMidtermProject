@@ -39,17 +39,17 @@
 
 					<c:if test="${loggedInUser.role.name eq 'clerk'}">
 
-						<li><a class="nav-link" href="list_users_for_certification.do">List
-								Users For Certification</a></li>
+						<li><a class="nav-link"
+							href="list_users_for_certification.do">List Users For
+								Certification</a></li>
 
 					</c:if>
 
 
 					<c:if test="${loggedInUser.role.name eq 'commander'}">
 
-						<li><a class="nav-link" href="clerk_one">Commander
-								Implemented</a></li>
-
+						<li><a class="nav-link" href="list_aircraft_types.do">Aircraft
+								Types</a></li>
 					</c:if>
 
 
@@ -58,8 +58,8 @@
 						<li><a class="nav-link" href="list_user.do">Users</a></li>
 
 					</c:if>
-					
-					
+
+
 					<li><a class="nav-link" href="logout.do">Logout</a></li>
 					<li><a class="nav-link" href="profile.do">Profile</a></li>
 
