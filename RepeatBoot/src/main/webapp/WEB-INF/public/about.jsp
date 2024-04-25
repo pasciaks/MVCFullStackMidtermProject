@@ -30,7 +30,35 @@
 					<div class="col text-center">
 						<h1>About</h1>
 						<img src="../logo.png" width="30%" alt="REPEAT logo"
-							class="img-responsive" /> <br>
+							class="img-responsive shadow hover-zoom" /> <br>
+							
+							<br>
+							<hr>
+
+						<h3 class="text-center text-success">Created by the following
+							Military Veteran developers thanks to VET TEC and Skill Distillery!</h3>
+
+						<hr>
+
+						<div class="row">
+							<div class="col">
+								<h3 class="text-center">Bryan</h3>
+
+								<p>SCRUM Master</p>
+								<p>DBA</p>
+								<p>Programmer</p>
+
+							</div>
+							<div class="col">
+								<h3 class="text-center">Sheldon</h3>
+
+								<p>REPO Owner</p>
+								<p>Programmer</p>
+
+							</div>
+						</div>
+
+						<hr>
 
 						<p>
 							<strong>EPIC:</strong> Military pilots are tasked with
@@ -50,7 +78,7 @@
 							<strong>INITIATIVE:</strong> Create a web based, mobile friendly
 							website that allows for the tracking of pilot qualifications for
 							various aircraft. The site should be able to easily identify any
-							shortcoming in pilot experience needed to be regarded as fully
+							shortcomings in pilot experience that is needed to be regarded as fully
 							qualified/combat ready.
 						</p>
 					</div>
@@ -59,28 +87,7 @@
 
 			<hr>
 
-			<h3 class="text-center text-success">Created by the following Veteran Developers thanks to VET
-				TEC and Skill Distillery!</h3>
 
-			<hr>
-
-			<div class="row">
-				<div class="col">
-					<h3 class="text-center">Bryan</h3>
-
-					<p>SCRUM Master</p>
-					<p>DBA</p>
-					<p>Programmer</p>
-
-				</div>
-				<div class="col">
-					<h3 class="text-center">Sheldon</h3>
-
-					<p>REPO Owner</p>
-					<p>Programmer</p>
-
-				</div>
-			</div>
 
 
 		</div>

@@ -38,7 +38,7 @@
 
 
 		<div class="container">
-			<table class="table table-bordered table-striped w-100">
+			<table class="table table-bordered w-100">
 				<tr class="bg-primary">
 					<th class="text-light">Start time</th>
 					<th class="text-light">Stop time</th>

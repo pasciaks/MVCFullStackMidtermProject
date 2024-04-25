@@ -29,7 +29,7 @@
 				<div class="col text-center">
 					<h1>Home</h1>
 					<img src="logo.png" width="25%" alt="REPEAT logo"
-						class="img-responsive" /> <br> <br>
+						class="img-responsive shadow hover-zoom" /> <br> <br>
 					<hr>
 					<h2>
 						<strong>R</strong>ecursive <strong>E</strong>ternity <strong>P</strong>ilot

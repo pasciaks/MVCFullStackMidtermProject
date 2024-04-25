@@ -130,6 +130,8 @@
 							</select>
 						</div>
 
+						<p class="text-info">Note: After you register, your account will be disabled
+							until an Admin approves it.</p>
 
 						<div class="mb-3">
 							<button type="submit" class="btn btn-primary">Register</button>
