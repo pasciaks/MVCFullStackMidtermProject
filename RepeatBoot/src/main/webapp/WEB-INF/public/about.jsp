@@ -30,13 +30,12 @@
 					<div class="col text-center">
 						<h1>About</h1>
 						<img src="../logo.png" width="30%" alt="REPEAT logo"
-							class="img-responsive shadow hover-zoom" /> <br>
-							
-							<br>
-							<hr>
+							class="img-responsive shadow hover-zoom" /> <br> <br>
+						<hr>
 
 						<h3 class="text-center text-success">Created by the following
-							Military Veteran developers thanks to VET TEC and Skill Distillery!</h3>
+							Military Veteran developers thanks to VET TEC and Skill
+							Distillery!</h3>
 
 						<hr>
 
@@ -78,8 +77,8 @@
 							<strong>INITIATIVE:</strong> Create a web based, mobile friendly
 							website that allows for the tracking of pilot qualifications for
 							various aircraft. The site should be able to easily identify any
-							shortcomings in pilot experience that is needed to be regarded as fully
-							qualified/combat ready.
+							shortcomings in pilot experience that is needed to be regarded as
+							fully qualified/combat ready.
 						</p>
 					</div>
 				</div>
@@ -87,6 +86,8 @@
 
 			<hr>
 
+			<a href="https://github.com/pasciaks/MVCFullStackMidtermProject"
+				target="_blank">GitHub Repo for this Project.</a>
 
 
 
