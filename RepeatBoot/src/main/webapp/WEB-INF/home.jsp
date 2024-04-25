@@ -29,8 +29,12 @@
 				<div class="col text-center">
 					<h1>Home</h1>
 					<img src="logo.png" width="25%" alt="REPEAT logo"
-						class="img-responsive" />
-					<p></p>
+						class="img-responsive" /> <br> <br>
+					<hr>
+					<h2>
+						<strong>R</strong>ecursive <strong>E</strong>ternity <strong>P</strong>ilot
+						<strong>E</strong>ducation <strong>A</strong>nd <strong>T</strong>racking
+					</h2>
 				</div>
 			</div>
 

@@ -28,9 +28,7 @@
 			<div class="row">
 				<div class="col">
 					<h1>Users</h1>
-					<c:if test="${! empty sessionScope.loggedInUser}">
-						<p>${sessionScope.loggedInUser.username}</p>
-					</c:if>
+
 
 					<c:if test="${! empty message}">
 						<div class="alert alert-success">${message}</div>
@@ -47,7 +45,7 @@
 								<td class="text-center">${user.id}<br><img
 									onerror="this.style.display='none';" src="${user.imageUrl}"
 									alt="Image Url for user with id : ${user.id}" title="Image Url for user with id : ${user.id}" width="100"></td>
-								<td>${user.username}</td>
+								<td>${user.username} (${user.role.name})</td>
 								<td>${user.enabled == true ? '<span class="text-success">enabled</span>' :  '<span class="text-danger">disabled</span>' }</td>
 								
 								<td>${user.organization.name}</td>
