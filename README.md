@@ -126,3 +126,43 @@ Mid-term Team Project for Skill Distillery, April 2024.
 [About The Developers-Bryan](https://www.linkedin.com/in/bryan-r-bradley/)
 
 <hr>
+
+# AFTER ACTION REVIEW / WASH-UP
+
+## The following screenshots are posted to identify a few small changes that would improve the current core-functionality of the app as it is. These three ideas are simply added here to honestly identify what is known about small important changes that should be included as improvements before future features are added.
+
+<br>
+
+<hr>
+
+<br>
+
+## Showing Pilot Name/Details on the Clerk's add/edit pages would be helpful because while editing/adding user certifications it would be clear which user (pilot) you are adding/editing certifications for.
+
+![After Action - Show Pilot Being Edited](aa1.png)
+
+<hr>
+
+![After Action - Show Pilot Being Edited](aa2.png)
+
+<br>
+
+<hr>
+
+<br>
+
+## The current method to sum pilot log entries for passing to the view that shows the comaprison of pilot log experiences to experience requirements needs improved.
+
+- The implemented quick and dirty solution simply stores the sums collected by the database id for the experience type.
+- This is flawed because any database id's > 999 would fail.
+- This is flawed because it passes the controller method sums of experience by type in an array of int[999] to the view.
+- Better would be to create a separate list of a new entity that has it's type ID and SUM.
+- Possibly even better would be JPQL/SQL equivalents to sum, group and create a datastructure of rows that would be shown by using a complex query.
+
+<br>
+
+![After Action - Improve the summing of expereiences](aa3.png)
+
+<hr>
+
+![After Action - Improve the summing of expereiences](aa4.png)
